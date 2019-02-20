@@ -7,7 +7,7 @@ import javax.persistence.Id;
 public class Grupo {
 
     @Id
-    private int id;
+    private Integer id;
 
     private Profesor profesor;
 
