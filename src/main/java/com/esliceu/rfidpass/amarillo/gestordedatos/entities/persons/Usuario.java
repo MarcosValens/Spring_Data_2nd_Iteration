@@ -1,6 +1,7 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Fichaje;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures.Asignatura;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Tarjeta;
 
 import javax.persistence.Entity;
@@ -29,6 +30,5 @@ public class Usuario {
     private Fichaje fichaje;
 
     private Collection<Asignatura> asignaturas;
-
 
 }
