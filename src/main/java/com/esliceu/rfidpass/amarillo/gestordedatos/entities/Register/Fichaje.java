@@ -1,4 +1,4 @@
-package com.esliceu.rfidpass.amarillo.gestordedatos.entities.register;
+package com.esliceu.rfidpass.amarillo.gestordedatos.entities.Register;
 
 public class Fichaje {
     private String tipo;
