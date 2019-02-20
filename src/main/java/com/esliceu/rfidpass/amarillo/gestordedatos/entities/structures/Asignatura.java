@@ -1,10 +1,11 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures;
 
+import com.esliceu.rfidpass.amarillo.gestordedatos.resources.DiasSemana;
+
 public class Asignatura {
 
-    enum dias{LUNES,MARTES,MIERCOLES,JUEVES,VIERNES}
     private String nombre;
     private Aula aula;
-    private dias dia;
+    private DiasSemana dia;
     private String hora;
 }
