@@ -1,17 +1,41 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Fichaje;
-import org.springframework.stereotype.Repository;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Collection;
-import java.util.List;
 
-@Repository
+@Entity
+@Table(name = "Lector")
 public class Lector {
 
     @Id
+    @Column(name = "Id")
     private String id;
 
-    private Collection<Fichaje> fichaes;
+    @Column(name = "Fichajes")
+    private Collection<Fichaje> fichajes;
+
+    public Lector() {
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Collection<Fichaje> getFichajes() {
+        return fichajes;
+    }
+
+    public void setFichajes(Collection<Fichaje> fichajes) {
+        this.fichajes = fichajes;
+    }
 }
