@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "Grupo")
@@ -20,7 +21,7 @@ public class Grupo {
     private Profesor profesor;
 
     @Column(name = "Alumnos")
-    private Alumno[] alumnos;
+    private ArrayList<Alumno> alumnos;
 
     public Grupo() {
 
@@ -42,11 +43,11 @@ public class Grupo {
         this.profesor = profesor;
     }
 
-    public Alumno[] getAlumnos() {
+    public ArrayList<Alumno> getAlumnos() {
         return alumnos;
     }
 
-    public void setAlumnos(Alumno[] alumnos) {
+    public void setAlumnos(ArrayList<Alumno> alumnos) {
         this.alumnos = alumnos;
     }
 }

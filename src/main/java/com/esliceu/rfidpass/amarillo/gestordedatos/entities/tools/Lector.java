@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -17,7 +18,7 @@ public class Lector {
     private String id;
 
     @Column(name = "Fichajes")
-    private Collection<Fichaje> fichajes;
+    private ArrayList<Fichaje> fichajes;
 
     public Lector() {
 
@@ -31,11 +32,11 @@ public class Lector {
         this.id = id;
     }
 
-    public Collection<Fichaje> getFichajes() {
+    public ArrayList<Fichaje> getFichajes() {
         return fichajes;
     }
 
-    public void setFichajes(Collection<Fichaje> fichajes) {
+    public void setFichajes(ArrayList<Fichaje> fichajes) {
         this.fichajes = fichajes;
     }
 }

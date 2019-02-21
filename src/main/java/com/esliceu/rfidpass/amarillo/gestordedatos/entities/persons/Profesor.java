@@ -1,5 +1,7 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons;
 
+import org.springframework.context.annotation.Bean;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;

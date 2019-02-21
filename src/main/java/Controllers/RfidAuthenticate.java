@@ -14,9 +14,15 @@ public class RfidAuthenticate {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    Tarjeta tarjeta;
 
     @RequestMapping("/validate")
-    public boolean validate (@RequestParam(value="uuid", defaultValue="") String name){
-        return  true;
+    public boolean validate (@RequestParam(value = "tajetId",defaultValue = "null")String tarjetId){
+
+        tarjeta.setId(tarjetId);
+
+        return  userRepository.existsByTarjeta(tarjeta);
+
     }
 }

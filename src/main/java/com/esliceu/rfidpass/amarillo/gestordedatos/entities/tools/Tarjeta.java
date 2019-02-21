@@ -15,9 +15,6 @@ public class Tarjeta {
     @Column(name = "Id")
     private String id;
 
-    @Column(name = "Usuario")
-    private Usuario usuario;
-
     public Tarjeta() {
 
     }
@@ -30,11 +27,4 @@ public class Tarjeta {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
 }

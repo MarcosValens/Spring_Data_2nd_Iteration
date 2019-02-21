@@ -5,7 +5,7 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures.Asignatur
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Tarjeta;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -14,9 +14,8 @@ import java.util.Date;
 public class Usuario {
 
 
-    @EmbeddedId
-    @Column(name = "UserId")
-    private UsuarioId userId;
+    @Column(name = "Id")
+    private Integer id;
 
     @Column(name = "Dni")
     private String dni;
@@ -37,16 +36,16 @@ public class Usuario {
     private Fichaje fichaje;
 
     @Column(name = "Asignaturas")
-    private Collection<Asignatura> asignaturas;
+    private ArrayList<Asignatura> asignaturas;
 
     public Usuario() {
 
     }
 
 
-    public UsuarioId getUserId() {return userId;}
+    public Integer getId() {return id;}
 
-    public void setUserId(UsuarioId userId) {this.userId = userId;}
+    public void setId(Integer id) {this.id = id;}
 
     public String getDni() {
         return dni;
@@ -96,11 +95,11 @@ public class Usuario {
         this.fichaje = fichaje;
     }
 
-    public Collection<Asignatura> getAsignaturas() {
+    public ArrayList<Asignatura> getAsignaturas() {
         return asignaturas;
     }
 
-    public void setAsignaturas(Collection<Asignatura> asignaturas) {
+    public void setAsignaturas(ArrayList<Asignatura> asignaturas) {
         this.asignaturas = asignaturas;
     }
 }
