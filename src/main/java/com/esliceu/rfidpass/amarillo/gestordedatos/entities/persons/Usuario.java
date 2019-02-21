@@ -5,10 +5,11 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures.Asignatur
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Tarjeta;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
 
-@Entity(name="Usuario")
+import java.util.Date;
+import java.util.Set;
+
+@Entity(name = "Usuario")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "Usuario_type",discriminatorType = DiscriminatorType.INTEGER)
 @Table(name = "Usuario")
@@ -18,26 +19,29 @@ public class Usuario {
     @Column(name = "Id")
     private Integer id;
 
-    @Column(name = "Dni")
+    @Column(name = "Dni", nullable = false)
     private String dni;
 
-    @Column(name = "Nombre")
+    @Column(name = "Nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "Apellido")
+    @Column(name = "Apellido", nullable = false)
     private String apellido;
 
-    @Column(name = "Fecha de nacimiento")
+    @Column(name = "Fecha de nacimiento", nullable = false)
     private Date fechaNacimiento;
 
-    @Column(name = "Tarjeta")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Id", nullable = false)
     private Tarjeta tarjeta;
 
-    @Column(name = "Fichaje")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Id")
     private Fichaje fichaje;
 
-    @Column(name = "Asignaturas")
-    private ArrayList<Asignatura> asignaturas;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Id", nullable = false)
+    private Set<Asignatura> asignaturas;
 
     public Usuario() {
 
@@ -96,11 +100,11 @@ public class Usuario {
         this.fichaje = fichaje;
     }
 
-    public ArrayList<Asignatura> getAsignaturas() {
+    public Set<Asignatura> getAsignaturas() {
         return asignaturas;
     }
 
-    public void setAsignaturas(ArrayList<Asignatura> asignaturas) {
+    public void setAsignaturas(Set<Asignatura> asignaturas) {
         this.asignaturas = asignaturas;
     }
 }

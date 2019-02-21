@@ -4,14 +4,18 @@ import javax.persistence.*;
 
 @Entity
 @DiscriminatorValue("1")
-public class Profesor extends Usuario{
+public class Profesor extends Usuario {
 
-    @Column(name = "Administrador")
+    @Column(name = "Administrador", nullable = false)
     private boolean administrador;
 
+    @OneToOne
+    @JoinColumn(name = "Id", nullable = false)
     private Grupo grupo;
 
     public Profesor() {
+
+        super();
 
     }
 

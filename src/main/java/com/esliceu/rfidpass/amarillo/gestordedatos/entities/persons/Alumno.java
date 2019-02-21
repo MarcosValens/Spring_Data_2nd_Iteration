@@ -7,13 +7,16 @@ import javax.persistence.*;
 public class Alumno extends Usuario {
 
 
-    @Column(name = "Matricula")
+    @Column(name = "Matricula", nullable = false)
     private String matricula;
 
-    @Column(name = "Grupo")
+    @OneToOne
+    @JoinColumn(name = "Id", nullable = false)
     private Grupo grupo;
 
     public Alumno() {
+
+        super();
 
     }
 
