@@ -15,28 +15,31 @@ public class Usuario {
 
 
     @EmbeddedId
-    @Column(name = "UserId")
+    @Column(name = "UserId", nullable = false)
     private UsuarioId userId;
 
-    @Column(name = "Dni")
+    @Column(name = "Dni", nullable = false)
     private String dni;
 
-    @Column(name = "Nombre")
+    @Column(name = "Nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "Apellido")
+    @Column(name = "Apellido", nullable = false)
     private String apellido;
 
-    @Column(name = "Fecha de nacimiento")
+    @Column(name = "Fecha de nacimiento", nullable = false)
     private Date fechaNacimiento;
 
-    @Column(name = "Tarjeta")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Id", nullable = false)
     private Tarjeta tarjeta;
 
-    @Column(name = "Fichaje")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Id")
     private Fichaje fichaje;
 
-    @Column(name = "Asignaturas")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Id", nullable = false)
     private Collection<Asignatura> asignaturas;
 
     public Usuario() {

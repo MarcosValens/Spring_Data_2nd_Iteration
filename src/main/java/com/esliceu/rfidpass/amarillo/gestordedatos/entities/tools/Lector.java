@@ -1,11 +1,9 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Fichaje;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures.Aula;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
@@ -13,11 +11,15 @@ import java.util.Collection;
 public class Lector {
 
     @Id
-    @Column(name = "Id")
+    @Column(name = "Id", nullable = false)
     private String id;
 
-    @Column(name = "Fichajes")
+    @OneToMany(mappedBy = "lector")
     private Collection<Fichaje> fichajes;
+
+    @OneToOne
+    @JoinColumn(name = "Id", nullable = false)
+    private Aula aula;
 
     public Lector() {
 
@@ -37,5 +39,13 @@ public class Lector {
 
     public void setFichajes(Collection<Fichaje> fichajes) {
         this.fichajes = fichajes;
+    }
+
+    public Aula getAula() {
+        return aula;
+    }
+
+    public void setAula(Aula aula) {
+        this.aula = aula;
     }
 }

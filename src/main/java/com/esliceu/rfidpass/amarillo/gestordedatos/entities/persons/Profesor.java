@@ -1,22 +1,20 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Profesor")
 public class Profesor {
 
     @Id
-    @Column(name = "Id")
+    @Column(name = "Id", nullable = false)
     private int id;
 
-    @Column(name = "Administrador")
+    @Column(name = "Administrador", nullable = false)
     private boolean administrador;
 
-    @Column(name = "Grupo")
+    @OneToOne
+    @JoinColumn(name = "Id", nullable = false)
     private Grupo grupo;
 
     public Profesor() {

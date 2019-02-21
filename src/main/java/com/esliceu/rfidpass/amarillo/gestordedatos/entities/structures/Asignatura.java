@@ -1,28 +1,35 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures;
 
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Usuario;
 import com.esliceu.rfidpass.amarillo.gestordedatos.resources.DiasSemana;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "Asignatura")
 public class Asignatura {
 
     @Id
-    @Column(name = "Nombre")
+    @Column(name = "Id", nullable = false)
+    private Integer id;
+
+    @Column(name = "Nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "Aula")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Id", nullable = false)
     private Aula aula;
 
-    @Column(name = "Dia")
+    @Column(name = "Dia", nullable = false)
     private DiasSemana dia;
 
-    @Column(name = "Hora")
+    @Column(name = "Hora", nullable = false)
     private String hora;
+
+    @OneToMany(mappedBy = "asignaturas")
+    @Column(nullable = false)
+    private ArrayList<Usuario> usuarios;
 
     public Asignatura() {
 
@@ -58,5 +65,21 @@ public class Asignatura {
 
     public void setHora(String hora) {
         this.hora = hora;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public ArrayList<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(ArrayList<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 }

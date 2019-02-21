@@ -1,23 +1,31 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.register;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Usuario;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Lector;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Fichaje")
 public class Fichaje {
 
     @Id
-    @Column(name = "Id")
+    @Column(name = "Id", nullable = false)
     private Integer id;
 
-    @Column(name = "Tipo")
+    @Column(name = "Tipo", nullable = false)
     private String tipo;
 
-    @Column(name = "Data")
+    @Column(name = "Data", nullable = false)
     private String data;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Id", nullable = false)
+    private Lector lector;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Id", nullable = false)
+    private Usuario usuario;
 
     public Fichaje() {
 
@@ -45,5 +53,21 @@ public class Fichaje {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public Lector getLector() {
+        return lector;
+    }
+
+    public void setLector(Lector lector) {
+        this.lector = lector;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
