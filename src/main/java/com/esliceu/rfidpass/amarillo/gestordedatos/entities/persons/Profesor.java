@@ -9,7 +9,6 @@ public class Profesor extends Usuario{
     @Column(name = "Administrador")
     private boolean administrador;
 
-    @Column(name = "Grupo")
     private Grupo grupo;
 
     public Profesor() {
