@@ -20,6 +20,9 @@ public class Grupo {
     @Column(name = "Profesor")
     private Profesor profesor;
 
+    @Column(name = "Tutor")
+    private Profesor tutor;
+
     @Column(name = "Alumnos")
     private ArrayList<Alumno> alumnos;
 
