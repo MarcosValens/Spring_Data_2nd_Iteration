@@ -4,23 +4,19 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Fichaje;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures.Asignatura;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Tarjeta;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+
 
 @Entity
 @Table(name = "Usuario")
 public class Usuario {
 
-    @Id
-    @Column(name = "Usuario")
-    private String usuario;
 
-    @Column(name = "Contraseña")
-    private String contraseña;
+    @EmbeddedId
+    @Column(name = "UserId")
+    private UsuarioId userId;
 
     @Column(name = "Dni")
     private String dni;
@@ -47,21 +43,10 @@ public class Usuario {
 
     }
 
-    public String getUsuario() {
-        return usuario;
-    }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
+    public UsuarioId getUserId() {return userId;}
 
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
+    public void setUserId(UsuarioId userId) {this.userId = userId;}
 
     public String getDni() {
         return dni;
