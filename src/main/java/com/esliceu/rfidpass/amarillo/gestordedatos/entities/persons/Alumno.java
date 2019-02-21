@@ -4,7 +4,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Alumno")
-public class Alumno {
+@DiscriminatorValue("2")
+public class Alumno extends Usuario {
 
     @Id
     @Column(name = "Matricula", nullable = false)

@@ -1,6 +1,14 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "Grupo")
@@ -17,7 +25,10 @@ public class Grupo {
 
     @OneToOne(mappedBy = "grupo", fetch = FetchType.LAZY)
     @Column(nullable = false)
-    private Alumno[] alumnos;
+    private ArrayList<Alumno> alumnos;
+
+    @Column(name = "Tutor")
+    private Profesor tutor;
 
     public Grupo() {
 
@@ -27,9 +38,11 @@ public class Grupo {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) {this.id = id; }
+
+    public Profesor getTutor() {return tutor;}
+
+    public void setTutor(Profesor tutor) {this.tutor = tutor;}
 
     public Profesor getProfesor() {
         return profesor;
@@ -39,11 +52,11 @@ public class Grupo {
         this.profesor = profesor;
     }
 
-    public Alumno[] getAlumnos() {
+    public ArrayList<Alumno> getAlumnos() {
         return alumnos;
     }
 
-    public void setAlumnos(Alumno[] alumnos) {
+    public void setAlumnos(ArrayList<Alumno> alumnos) {
         this.alumnos = alumnos;
     }
 }
