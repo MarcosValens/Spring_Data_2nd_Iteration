@@ -1,19 +1,11 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons;
 
-import org.springframework.context.annotation.Bean;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Profesor")
-public class Profesor {
-
-    @Id
-    @Column(name = "Id")
-    private int id;
+@DiscriminatorValue("1")
+public class Profesor extends Usuario{
 
     @Column(name = "Administrador")
     private boolean administrador;
@@ -23,14 +15,6 @@ public class Profesor {
 
     public Profesor() {
 
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public boolean isAdministrador() {

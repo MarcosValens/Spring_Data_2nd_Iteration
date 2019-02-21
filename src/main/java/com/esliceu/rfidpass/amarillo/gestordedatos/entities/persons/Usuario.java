@@ -8,12 +8,13 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 
-
-@Entity
+@Entity(name="Usuario")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "Usuario_type",discriminatorType = DiscriminatorType.INTEGER)
 @Table(name = "Usuario")
 public class Usuario {
 
-
+    @Id
     @Column(name = "Id")
     private Integer id;
 

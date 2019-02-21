@@ -1,15 +1,13 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Alumno")
-public class Alumno {
+@DiscriminatorValue("2")
+public class Alumno extends Usuario {
 
-    @Id
+
     @Column(name = "Matricula")
     private String matricula;
 
