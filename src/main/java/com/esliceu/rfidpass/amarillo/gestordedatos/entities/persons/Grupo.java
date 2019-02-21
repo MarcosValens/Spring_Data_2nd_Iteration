@@ -34,17 +34,17 @@ public class Grupo {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) {this.id = id; }
+
+    public Profesor getTutor() {return tutor;}
+
+    public void setTutor(Profesor tutor) {this.tutor = tutor;}
 
     public Profesor getProfesor() {
         return profesor;
     }
 
-    public void setProfesor(Profesor profesor) {
-        this.profesor = profesor;
-    }
+    public void setProfesor(Profesor profesor) { this.profesor = profesor;}
 
     public ArrayList<Alumno> getAlumnos() {
         return alumnos;
