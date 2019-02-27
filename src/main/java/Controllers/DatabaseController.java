@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class DatabaseController {
-    FixatgeMock fixatge = new FixatgeMock();
-
+    FixatgeMock fixatgee = new FixatgeMock();
 
 }
