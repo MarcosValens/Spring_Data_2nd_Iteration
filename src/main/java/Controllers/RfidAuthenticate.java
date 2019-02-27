@@ -49,18 +49,20 @@ public class RfidAuthenticate {
     @RequestMapping("/ontime")
     public boolean onTime(
             @RequestParam(value = "fichageId", defaultValue = "null") String fichageId,
-            @RequestParam(value = "subjectId", defaultValue = "null") String subjectId
+            @RequestParam(value = "subjectId", defaultValue = "null") String subjectId,
+            @RequestParam(value = "userId", defaultValue = "null") String userId
     ) {
         Optional<Fichaje> fichaje = fichajeRepository.findById(Integer.parseInt(fichageId));
         Optional<Asignatura> asignatura = asignaturaRepository.findById(Integer.parseInt(subjectId));
-        if (asignatura.isPresent() && fichaje.isPresent()) {
-            return isOnTime(fichaje.get(), asignatura.get());
+        Optional<Usuario> usuario = userRepository.findById(Integer.parseInt(userId));
+        if (asignatura.isPresent() && fichaje.isPresent() && usuario.isPresent()) {
+            return isOnTime(fichaje.get(), asignatura.get(), usuario.get());
         }
         return false;
     }
 
-    private boolean isOnTime(Fichaje fichage, Asignatura asignatura) {
+    private boolean isOnTime(Fichaje fichage, Asignatura asignatura, Usuario usuario) {
         String now = fichage.getData();
-        return asignatura.getHora().equals(now);
+        return asignatura.getHora().equals(now) && usuario.getAsignaturas().contains(asignatura);
     }
 }
