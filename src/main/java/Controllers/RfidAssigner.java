@@ -33,6 +33,5 @@ public class RfidAssigner {
             this.userRepository.save(usuario);
         }
 
-
     }
 }
