@@ -7,5 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface UserRepository  extends CrudRepository<Usuario, Integer> {
 
     boolean existsByTarjeta(Tarjeta tarjeta);
+    Usuario findByTarjeta(Tarjeta tarjeta);
 
 }
