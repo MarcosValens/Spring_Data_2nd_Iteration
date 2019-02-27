@@ -22,7 +22,7 @@ public class RfidAssigner {
     }
 
     @RequestMapping("/assign")
-    public void assign(@RequestParam(value = "tajetId", defaultValue = "null") String tarjetId,
+    public void assign(@RequestParam(value = "tarjetId", defaultValue = "null") String tarjetId,
                           @RequestParam(value = "studentId", defaultValue = "null") String studentId) {
         this.tarjeta.setId(tarjetId);
         Optional<Usuario> optionalUsuario = this.userRepository.findById(Integer.parseInt(studentId));
