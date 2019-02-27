@@ -29,9 +29,10 @@ public class RfidAssigner {
         Usuario usuario = null;
         if (optionalUsuario.isPresent()) {
             usuario = optionalUsuario.get();
+            usuario.setTarjeta(this.tarjeta);
+            this.userRepository.save(usuario);
         }
-        usuario.setTarjeta(this.tarjeta);
-        this.userRepository.save(usuario);
+
 
     }
 }
