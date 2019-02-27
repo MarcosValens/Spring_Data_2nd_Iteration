@@ -9,7 +9,7 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Lector;
 public class FixatgeMock {
     int id = 20;
     String tipo = "entrada";
-    String data = "2019/02/27";
+    String data = "2019/02/27@16:05";
     Lector lector;
     Usuario usuario;
 }

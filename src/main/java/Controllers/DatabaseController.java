@@ -13,6 +13,6 @@ import javax.xml.crypto.Data;
 @RestController
 public class DatabaseController {
     FixatgeMock fixatgee = new FixatgeMock();
-    
+
 
 }
