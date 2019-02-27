@@ -27,6 +27,9 @@ public class Asignatura {
     @Column(name = "Hora", nullable = false)
     private String hora;
 
+    @Column(name = "HoraFinal", nullable = false)
+    private String horaFinal;
+
     @OneToMany(mappedBy = "asignaturas")
     private Set<Usuario> usuarios;
 
@@ -80,5 +83,13 @@ public class Asignatura {
 
     public void setUsuarios(Set<Usuario> usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public String getHoraFinal() {
+        return horaFinal;
+    }
+
+    public void setHoraFinal(String horaFinal) {
+        this.horaFinal = horaFinal;
     }
 }
