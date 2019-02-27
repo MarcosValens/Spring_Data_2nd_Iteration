@@ -27,6 +27,7 @@ public class RfidAssigner {
         this.tarjeta.setId(tarjetId);
         Optional<Usuario> optionalUsuario = this.userRepository.findById(Integer.parseInt(studentId));
         Usuario usuario = null;
+
         if (optionalUsuario.isPresent()) {
             usuario = optionalUsuario.get();
             usuario.setTarjeta(this.tarjeta);

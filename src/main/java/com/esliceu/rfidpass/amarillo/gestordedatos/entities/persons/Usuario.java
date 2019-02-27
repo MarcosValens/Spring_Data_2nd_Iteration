@@ -31,6 +31,9 @@ public class Usuario {
     @Column(name = "FechaDeNacimiento", nullable = false)
     private Date fechaNacimiento;
 
+    @Column(name = "Email", nullable = false)
+    private String email;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Tarjeta tarjeta;
 
@@ -103,5 +106,13 @@ public class Usuario {
 
     public void setAsignaturas(Set<Asignatura> asignaturas) {
         this.asignaturas = asignaturas;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

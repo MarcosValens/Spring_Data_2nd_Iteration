@@ -46,7 +46,6 @@ public class RfidAuthenticate {
         return valueToSend;
     }
 
-    // Coso
     @RequestMapping("/ontime")
     public boolean onTime(
             @RequestParam(value = "fichageId", defaultValue = "null") String fichageId,
