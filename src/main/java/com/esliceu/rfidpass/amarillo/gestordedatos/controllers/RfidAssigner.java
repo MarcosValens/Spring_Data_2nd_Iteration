@@ -1,4 +1,4 @@
-package Controllers;
+package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Usuario;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Tarjeta;
@@ -24,9 +24,11 @@ public class RfidAssigner {
     @RequestMapping("/assign")
     public void assign(@RequestParam(value = "tarjetId", defaultValue = "null") String tarjetId,
                           @RequestParam(value = "studentId", defaultValue = "null") String studentId) {
+
         this.tarjeta.setId(tarjetId);
+
         Optional<Usuario> optionalUsuario = this.userRepository.findById(Integer.parseInt(studentId));
-        Usuario usuario = null;
+        Usuario usuario;
 
         if (optionalUsuario.isPresent()) {
             usuario = optionalUsuario.get();
