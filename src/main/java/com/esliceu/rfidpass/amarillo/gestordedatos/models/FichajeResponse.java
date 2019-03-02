@@ -1,6 +1,5 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.models;
 
-import com.esliceu.rfidpass.amarillo.gestordedatos.resources.DiasSemana;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.stereotype.Component;
 

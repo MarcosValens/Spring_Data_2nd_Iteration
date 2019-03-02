@@ -12,7 +12,6 @@ public class Students {
     @XmlElement(name="ALUMNE")
     private List<Student> students;
 
-
     public List<Student> getStudents() {
         return students;
     }

@@ -1,4 +1,4 @@
-package com.esliceu.rfidpass.amarillo.gestordedatos.resources;
+package com.esliceu.rfidpass.amarillo.gestordedatos.models;
 
 public enum DiasSemana {
     LUNES,

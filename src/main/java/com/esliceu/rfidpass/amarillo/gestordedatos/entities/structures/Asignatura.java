@@ -1,7 +1,7 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Usuario;
-import com.esliceu.rfidpass.amarillo.gestordedatos.resources.DiasSemana;
+import com.esliceu.rfidpass.amarillo.gestordedatos.models.DiasSemana;
 
 import javax.persistence.*;
 import java.util.Set;

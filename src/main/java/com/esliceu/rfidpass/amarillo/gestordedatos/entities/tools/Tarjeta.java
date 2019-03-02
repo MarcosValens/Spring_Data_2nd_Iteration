@@ -5,7 +5,7 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Usuario;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Tarjeta")
+@Table(name = "TarjetaRepository")
 public class Tarjeta {
 
     @Id

@@ -7,7 +7,7 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Tarjeta;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.FichajeResponse;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.AsignaturaRepository;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.FichajeRepository;
-import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.UserRepository;
+import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RfidAuthenticate {
 
-    private final UserRepository userRepository;
+    private final UsuarioRepository userRepository;
     private final Tarjeta tarjeta;
     private final FichajeRepository fichajeRepository;
     private final AsignaturaRepository asignaturaRepository;
 
     @Autowired
-    public RfidAuthenticate(UserRepository userRepository, Tarjeta tarjeta,
+    public RfidAuthenticate(UsuarioRepository userRepository, Tarjeta tarjeta,
                             FichajeRepository fichajeRepository, AsignaturaRepository asignaturaRepository) {
         this.userRepository = userRepository;
         this.tarjeta = tarjeta;

@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Entity(name = "Usuario")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "Usuario_type",discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorColumn(name = "Usuario_type", discriminatorType = DiscriminatorType.INTEGER)
 @Table(name = "Usuario")
 public class Usuario {
 

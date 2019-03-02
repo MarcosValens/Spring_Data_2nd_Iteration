@@ -2,7 +2,7 @@ package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Usuario;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Tarjeta;
-import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.UserRepository;
+import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,10 +13,10 @@ import java.util.Optional;
 @RestController
 public class RfidAssigner {
     private final Tarjeta tarjeta;
-    private final UserRepository userRepository;
+    private final UsuarioRepository userRepository;
 
     @Autowired
-    public RfidAssigner(Tarjeta tarjeta, UserRepository userRepository) {
+    public RfidAssigner(Tarjeta tarjeta, UsuarioRepository userRepository) {
         this.tarjeta = tarjeta;
         this.userRepository = userRepository;
     }

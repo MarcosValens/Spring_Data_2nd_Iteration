@@ -1,4 +1,4 @@
-package com.esliceu.rfidpass.amarillo.gestordedatos.resources;
+package com.esliceu.rfidpass.amarillo.gestordedatos.modules;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Tarjeta;
 import org.springframework.context.annotation.Bean;

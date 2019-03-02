@@ -20,9 +20,13 @@ public class DataController {
     public boolean updateData(@RequestBody String data) {
         Center center = xmlParser(data);
 
-        System.out.println(center);
+        if (center == null){
+           return false;
+        }
 
-        return false;
+
+
+        return true;
     }
 
     // Servicio azul para que ellos obtengan las faltas pendientes.

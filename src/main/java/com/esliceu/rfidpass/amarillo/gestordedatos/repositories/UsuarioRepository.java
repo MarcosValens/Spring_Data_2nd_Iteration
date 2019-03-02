@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 
-public interface UserRepository extends CrudRepository<Usuario, Integer> {
+public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
 
     boolean existsByTarjeta(Tarjeta tarjeta);
     Usuario findByTarjeta(Tarjeta tarjeta);
