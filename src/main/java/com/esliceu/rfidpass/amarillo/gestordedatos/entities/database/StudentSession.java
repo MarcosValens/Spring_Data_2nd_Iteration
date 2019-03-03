@@ -6,6 +6,7 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 
 @Entity
+@Table(name = "Estudiante_Sesiones")
 public class StudentSession { //Horas de la sesiones con la asignatura.
 
     @Id

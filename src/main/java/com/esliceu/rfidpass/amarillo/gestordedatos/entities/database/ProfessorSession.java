@@ -6,6 +6,7 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 
 @Entity
+@Table(name = "Profesor_Sesiones")
 public class ProfessorSession { //Clases de un profesor
 
     @Id
@@ -32,6 +33,8 @@ public class ProfessorSession { //Clases de un profesor
     private String startHour;
     private String endHour;
     private Integer durada;
+
+
 
     public ProfessorSession() {}
 

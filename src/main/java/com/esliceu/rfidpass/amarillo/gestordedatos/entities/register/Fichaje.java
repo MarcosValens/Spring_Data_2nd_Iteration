@@ -1,5 +1,6 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.register;
 
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.database.User;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Usuario;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Lector;
 
@@ -23,7 +24,7 @@ public class Fichaje {
     private Lector lector;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Usuario usuario;
+    private User usuario;
 
     public Fichaje() {
 
@@ -61,11 +62,11 @@ public class Fichaje {
         this.lector = lector;
     }
 
-    public Usuario getUsuario() {
+    public User getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(User usuario) {
         this.usuario = usuario;
     }
 }

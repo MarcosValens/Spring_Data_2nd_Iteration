@@ -2,9 +2,11 @@ package com.esliceu.rfidpass.amarillo.gestordedatos.entities.database;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Entity //Cursos
+@Table(name = "Curso")
 public class Course {
 
     @Id

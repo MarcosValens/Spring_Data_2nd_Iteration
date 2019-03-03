@@ -13,9 +13,7 @@ public class Alumno extends Usuario {
     private Grupo grupo;
 
     public Alumno() {
-
         super();
-
     }
 
     public String getMatricula() {

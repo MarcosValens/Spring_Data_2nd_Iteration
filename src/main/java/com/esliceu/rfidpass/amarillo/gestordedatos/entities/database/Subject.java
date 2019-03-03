@@ -2,8 +2,10 @@ package com.esliceu.rfidpass.amarillo.gestordedatos.entities.database;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name = "Asignatura")
 public class Subject { //Assignatura tiene un curso.
 
     @Id
@@ -12,8 +14,11 @@ public class Subject { //Assignatura tiene un curso.
     private String description;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "course_code")
+    @JoinColumn(name = "curso_code")
     private Course course;
+
+    @OneToMany(mappedBy = "asignaturas")
+    private Set<User> users;
 
     public Integer getCode() {
         return code;
@@ -37,5 +42,13 @@ public class Subject { //Assignatura tiene un curso.
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

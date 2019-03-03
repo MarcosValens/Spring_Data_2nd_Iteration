@@ -1,9 +1,13 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.database;
 
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures.Asignatura;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Lector;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "grupo") // Grupos como el A, B
+@Table(name = "Grupo") // Grupos como el A, B
 public class Group {
 
     @Id
@@ -12,9 +16,15 @@ public class Group {
     private String name;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "course_code")
+    @JoinColumn(name = "curso_code")
     private Course course;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Id", nullable = false)
+    private Lector lector;
+
+    @OneToMany(mappedBy = "grupo")
+    private Set<Asignatura> asignaturas;
 
     public Group() {}
 
@@ -35,5 +45,12 @@ public class Group {
     public void setCourse(Course course) {
         this.course = course;
     }
-    
+
+    public Lector getLector() {
+        return lector;
+    }
+
+    public void setLector(Lector lector) {
+        this.lector = lector;
+    }
 }
