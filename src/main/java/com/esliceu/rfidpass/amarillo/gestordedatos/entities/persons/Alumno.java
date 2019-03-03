@@ -6,7 +6,6 @@ import javax.persistence.*;
 @DiscriminatorValue("2")
 public class Alumno extends Usuario {
 
-
     @Column(name = "Matricula", nullable = false)
     private String matricula;
 

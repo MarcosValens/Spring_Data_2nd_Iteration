@@ -1,29 +1,23 @@
-package com.esliceu.rfidpass.amarillo.gestordedatos.models.xml_models;
+package com.esliceu.rfidpass.amarillo.gestordedatos.entities.database;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.*;
 
-
-@XmlRootElement(name = "ALUMNE")
-@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
 public class Student {
 
-    @XmlAttribute(name="codi")
+    @Id
+    @Column(length = 50)
     private String code;
 
-    @XmlAttribute(name="nom")
     private String name;
-
-    @XmlAttribute(name="ap1")
     private String firstSurname;
-
-    @XmlAttribute(name="ap2")
     private String secondSurname;
 
-    @XmlAttribute(name="grup")
-    private Integer groupCode;
+    @ManyToOne
+    @JoinColumn(name = "grupo_code")
+    private Group group; //Grupo
+
+    public Student() {}
 
     public String getCode() {
         return code;
@@ -57,12 +51,11 @@ public class Student {
         this.secondSurname = secondSurname;
     }
 
-    public Integer getGroupCode() {
-        return groupCode;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroupCode(Integer groupCode) {
-        this.groupCode = groupCode;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }
-

@@ -3,6 +3,8 @@ package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Profesor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Usuario;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Fichaje;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures.Asignatura;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Tarjeta;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.FichajeResponse;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.AsignaturaRepository;
@@ -11,7 +13,10 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.UsuarioRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 public class RfidAuthenticate {
@@ -49,7 +54,7 @@ public class RfidAuthenticate {
         return valueToSend;
     }
 
-    /*@RequestMapping("/ontime")
+    @RequestMapping("/ontime")
     public boolean onTime(
             @RequestParam(value = "fichageId", defaultValue = "null") String fichageId,
             @RequestParam(value = "subjectId", defaultValue = "null") String subjectId,
@@ -70,5 +75,5 @@ public class RfidAuthenticate {
         String now = fichage.getData();
 
         return asignatura.getHora().equals(now) && usuario.getAsignaturas().contains(asignatura);
-    }*/
+    }
 }
