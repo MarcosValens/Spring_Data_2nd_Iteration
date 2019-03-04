@@ -17,34 +17,32 @@ import java.util.*;
 public class FichajeConsulter {
 
     private SigningRepository signingRepository;
-    private ProfessorRepository ProfessorRepository;
+    private ProfessorRepository professorRepository;
 
     @Autowired
-    public FichajeConsulter(SigningRepository signingRepository, ProfessorRepository ProfessorRepository){
+    public FichajeConsulter(SigningRepository signingRepository, ProfessorRepository professorRepository){
         this.signingRepository = signingRepository;
-        this.ProfessorRepository = ProfessorRepository;
+        this.professorRepository = professorRepository;
     }
 
     @RequestMapping("/getfichajes")
-    public Map<String, List<Signing>> getFichajes(@RequestParam(value = "TeacherId", defaultValue = "null") String TeacherId){
+    public Map<String, List<Signing>> getFichajes(@RequestParam(value = "teacherId", defaultValue = "null") String teacherId){
+        Map<String, List<Signing>> signings = new HashMap<>();
 
-        Optional<Professor> teacher = ProfessorRepository.findById(Integer.parseInt(TeacherId));
+        // If teacher doesn't exist signings will be empty
+        professorRepository.findById(Integer.parseInt(teacherId)).ifPresent(teacher -> {
+            Group group = teacher.getGroup();
+            Set<Student> users = group.getStudents();
+            for (Student student : users) {
+                List<Signing> studentSignings = signingRepository.findByUsuario(student);
+                StringBuilder name = new StringBuilder();
 
-        Group grupoProfesor = teacher.get().getGroup();
-        Set<Student> usuariosGrupo= grupoProfesor.getStudents();
-
-        Map<String, List<Signing>> allFichajes = new HashMap<>();
-
-        for (Student alumno : usuariosGrupo) {
-            List<Signing> fichajesAlumno = signingRepository.findByUsuario(alumno);
-            StringBuilder nameCreator = new StringBuilder();
-
-            nameCreator.append(alumno.getName());
-            nameCreator.append(" ");
-            nameCreator.append(alumno.getFirstSurname());
-            allFichajes.put(nameCreator.toString(), fichajesAlumno);
-        }
-
-        return allFichajes;
+                name.append(student.getName());
+                name.append(" ");
+                name.append(student.getFirstSurname());
+                signings.put(name.toString(), studentSignings);
+            }
+        });
+        return signings;
     }
 }
