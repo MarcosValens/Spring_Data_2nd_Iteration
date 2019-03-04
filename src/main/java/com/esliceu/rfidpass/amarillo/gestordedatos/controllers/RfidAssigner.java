@@ -2,6 +2,7 @@ package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Card;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.User;
+import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.CardRepository;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +15,13 @@ import java.util.Optional;
 public class RfidAssigner {
     private final Card card;
     private final UserRepository userRepository;
+    private final CardRepository cardRepository;
 
     @Autowired
-    public RfidAssigner(Card card, UserRepository userRepository) {
+    public RfidAssigner(Card card, UserRepository userRepository, CardRepository cardRepository) {
         this.card = card;
         this.userRepository = userRepository;
+        this.cardRepository = cardRepository;
     }
 
     @RequestMapping("/assign")
@@ -33,7 +36,9 @@ public class RfidAssigner {
         if (optionalUsuario.isPresent()) {
             usuario = optionalUsuario.get();
             usuario.setCard(this.card);
+            this.card.setUser(usuario);
             this.userRepository.save(usuario);
+            this.cardRepository.save(this.card);
         }
 
     }
