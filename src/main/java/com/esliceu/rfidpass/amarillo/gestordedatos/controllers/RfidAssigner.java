@@ -23,11 +23,11 @@ public class RfidAssigner {
 
     @RequestMapping("/assign")
     public void assign(@RequestParam(value = "tarjetId", defaultValue = "null") String tarjetId,
-                          @RequestParam(value = "userId", defaultValue = "null") String studentId) {
+                          @RequestParam(value = "userId", defaultValue = "null") String userId) {
 
         this.card.setId(tarjetId);
 
-        Optional<User> optionalUsuario = this.userRepository.findById(Integer.parseInt(studentId));
+        Optional<User> optionalUsuario = this.userRepository.findById(Integer.parseInt(userId));
         User usuario;
 
         if (optionalUsuario.isPresent()) {
