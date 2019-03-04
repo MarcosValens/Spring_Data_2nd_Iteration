@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface SigningRepository extends CrudRepository<Signing, Integer> {
 
-    List<Signing> findByUsuario(Student student);
+    List<Signing> findByUser(Student student);
 }

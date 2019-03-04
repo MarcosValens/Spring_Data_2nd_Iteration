@@ -16,17 +16,14 @@ public class Group {
     private String name;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "curso_code")
+    @JoinColumn(name = "course_code")
     private Course course;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Id", nullable = false)
     private Lector lector;
 
-    @OneToMany(mappedBy = "grupo")
-    private Set<Subject> subjects;
-
-    @OneToMany(mappedBy = "grupo")
+    @OneToMany(mappedBy = "group")
     private Set<Student> students;
 
     public Group() {}
@@ -55,14 +52,6 @@ public class Group {
 
     public void setLector(Lector lector) {
         this.lector = lector;
-    }
-
-    public Set<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(Set<Subject> subjects) {
-        this.subjects = subjects;
     }
 
     public Set<Student> getStudents() {

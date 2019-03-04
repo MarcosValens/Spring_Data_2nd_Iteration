@@ -10,7 +10,7 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "Usuario_type", discriminatorType = DiscriminatorType.INTEGER)
 @Table(name = "Usuario")
-public abstract class User {
+public class User {
 
     @Id
     @Column(name = "Id")
@@ -25,7 +25,7 @@ public abstract class User {
     @OneToOne(cascade = CascadeType.ALL)
     private Card card;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "user")
     private Set<Signing> signing;
 
     public Integer getId() {

@@ -36,7 +36,7 @@ public class FichajeConsulter {
         Map<String, List<Signing>> allFichajes = new HashMap<>();
 
         for (Student alumno : usuariosGrupo) {
-            List<Signing> fichajesAlumno = signingRepository.findByUsuario(alumno);
+            List<Signing> fichajesAlumno = signingRepository.findByUser(alumno);
             StringBuilder nameCreator = new StringBuilder();
 
             nameCreator.append(alumno.getName());

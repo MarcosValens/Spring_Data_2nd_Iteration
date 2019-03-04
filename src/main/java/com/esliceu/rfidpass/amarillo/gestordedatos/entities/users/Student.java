@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Student extends User {
 
     @ManyToOne
-    @JoinColumn(name = "grupo_code")
+    @JoinColumn(name = "group_code")
     private Group group; //Grupo
 
     public Student() {

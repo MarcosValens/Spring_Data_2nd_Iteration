@@ -16,11 +16,8 @@ public class Subject { //Assignatura tiene un curso.
     private String description;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "curso_code")
+    @JoinColumn(name = "course_code")
     private Course course;
-
-    @OneToMany(mappedBy = "asignatura")
-    private Set<Student> students;
 
     public Integer getCode() {
         return code;
@@ -44,13 +41,5 @@ public class Subject { //Assignatura tiene un curso.
 
     public void setCourse(Course course) {
         this.course = course;
-    }
-
-    public Set<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Set<Student> students) {
-        this.students = students;
     }
 }

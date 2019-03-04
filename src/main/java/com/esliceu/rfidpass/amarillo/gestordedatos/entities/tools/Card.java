@@ -12,7 +12,7 @@ public class Card {
     @Column(name = "Id", nullable = false)
     private String id;
 
-    @OneToOne(mappedBy = "tarjeta", fetch = FetchType.LAZY, optional = false)
+    @OneToOne(mappedBy = "card", fetch = FetchType.LAZY, optional = false)
     private User user;
 
     public Card() {
