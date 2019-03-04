@@ -1,4 +1,7 @@
-package com.esliceu.rfidpass.amarillo.gestordedatos.entities.database;
+package com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions;
+
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Subject;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Student;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
@@ -44,14 +47,6 @@ public class StudentSession { //Horas de la sesiones con la asignatura.
         this.StartHour = startHour;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
     public Long getId() {
         return id;
     }
@@ -77,5 +72,13 @@ public class StudentSession { //Horas de la sesiones con la asignatura.
     public String getEndHour() {return endHour;}
 
     public void setEndHour(String endHour) {this.endHour = endHour;}
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 }
 

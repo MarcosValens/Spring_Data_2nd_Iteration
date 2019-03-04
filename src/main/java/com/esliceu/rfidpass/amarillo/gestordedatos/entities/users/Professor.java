@@ -1,4 +1,7 @@
-package com.esliceu.rfidpass.amarillo.gestordedatos.entities.database;
+package com.esliceu.rfidpass.amarillo.gestordedatos.entities.users;
+
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Group;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.User;
 
 import javax.persistence.*;
 

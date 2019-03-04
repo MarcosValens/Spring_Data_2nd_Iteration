@@ -1,6 +1,5 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.mocks;
 
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Usuario;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Lector;
 
 /**

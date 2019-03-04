@@ -1,4 +1,6 @@
-package com.esliceu.rfidpass.amarillo.gestordedatos.entities.database;
+package com.esliceu.rfidpass.amarillo.gestordedatos.entities.users;
+
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Group;
 
 import javax.persistence.*;
 
@@ -11,7 +13,8 @@ public class Student extends User {
     @JoinColumn(name = "grupo_code")
     private Group group; //Grupo
 
-    public Student() {}
+    public Student() {
+    }
 
     public Group getGroup() {
         return group;

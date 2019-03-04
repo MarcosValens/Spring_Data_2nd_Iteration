@@ -1,15 +1,16 @@
-package com.esliceu.rfidpass.amarillo.gestordedatos.entities.database;
+package com.esliceu.rfidpass.amarillo.gestordedatos.entities.users;
 
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Fichaje;
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Tarjeta;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Signing;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Card;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "Usuario_type", discriminatorType = DiscriminatorType.INTEGER)
 @Table(name = "Usuario")
-public class User {
+public abstract class User {
 
     @Id
     @Column(name = "Id")
@@ -22,10 +23,10 @@ public class User {
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Tarjeta tarjeta;
+    private Card card;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Fichaje fichaje;
+    @OneToMany(mappedBy = "usuario")
+    private Set<Signing> signing;
 
     public Integer getId() {
         return id;
@@ -75,19 +76,19 @@ public class User {
         this.password = password;
     }
 
-    public Tarjeta getTarjeta() {
-        return tarjeta;
+    public Card getCard() {
+        return card;
     }
 
-    public void setTarjeta(Tarjeta tarjeta) {
-        this.tarjeta = tarjeta;
+    public void setCard(Card card) {
+        this.card = card;
     }
 
-    public Fichaje getFichaje() {
-        return fichaje;
+    public Set<Signing> getSigning() {
+        return signing;
     }
 
-    public void setFichaje(Fichaje fichaje) {
-        this.fichaje = fichaje;
+    public void setSigning(Set<Signing> signing) {
+        this.signing = signing;
     }
 }

@@ -1,4 +1,9 @@
-package com.esliceu.rfidpass.amarillo.gestordedatos.entities.database;
+package com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions;
+
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Course;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Group;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Subject;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
@@ -14,7 +19,7 @@ public class ProfessorSession { //Clases de un profesor
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "professor_code")
+    @JoinColumn(name = "profesor_code")
     private Professor professor;
 
     @ManyToOne
@@ -22,19 +27,17 @@ public class ProfessorSession { //Clases de un profesor
     private Group group;
 
     @ManyToOne
-    @JoinColumn(name = "course_code")
+    @JoinColumn(name = "curso_code")
     private Course course;
 
     @ManyToOne
-    @JoinColumn(name = "subject_code")
+    @JoinColumn(name = "asignatura_code")
     private Subject subject;
 
     private String day;
     private String startHour;
     private String endHour;
     private Integer durada;
-
-
 
     public ProfessorSession() {}
 
@@ -54,14 +57,6 @@ public class ProfessorSession { //Clases de un profesor
 
     public void setStartHour(String startHour) {
         this.startHour = startHour;
-    }
-
-    public Professor getProfessor() {
-        return professor;
-    }
-
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
     }
 
     public Group getGroup() {
@@ -114,5 +109,13 @@ public class ProfessorSession { //Clases de un profesor
 
     public void setEndHour(String endHour) {
         this.endHour = endHour;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 }

@@ -1,6 +1,6 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Usuario;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +21,7 @@ public class DataController {
 
     // Servicio azul para que ellos obtengan las faltas pendientes.
     @RequestMapping(value = "/getTeachers", method = RequestMethod.GET)
-    public List<Usuario> getTeachers() {
-
-
+    public List<Professor> getTeachers() {
 
         return new ArrayList<>();
     }

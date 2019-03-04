@@ -149,13 +149,13 @@ Define una asociación de muchos valores con multiplicidad de uno a muchos.
 public class Lector {
 
     @OneToMany(mappedBy = "lector")
-    private Set<Fichaje> fichajes;
+    private Set<Fichaje> signings;
 
 }
 ```
 ```java
 @Entity
-@Table(name = "Fichaje")
+@Table(name = Signing)
 public class Fichaje {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -171,7 +171,7 @@ Define una asociación de un solo valor para otra clase de entidad que tiene una
 
 ```java
 @Entity
-@Table(name = "Fichaje")
+@Table(name = Signing)
 public class Fichaje {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -186,7 +186,7 @@ public class Fichaje {
 public class Lector {
 
     @OneToMany(mappedBy = "lector")
-    private Set<Fichaje> fichajes;
+    private Set<Fichaje> signings;
 
 }
 ```

@@ -1,11 +1,11 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.persons.Profesor;
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures.Aula;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Group;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Lector;
-import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.AulaRepository;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
+import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.GroupRepository;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.LectorRepository;
-import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.ProfesorRepository;
+import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.ProfessorRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,12 +16,13 @@ import java.util.Optional;
 public class RfidCodeMachine {
 
     private LectorRepository lectorRepository;
-    private AulaRepository aulaRepository;
-    private ProfesorRepository profesorRepository;
-    public RfidCodeMachine(LectorRepository lectorRepository, AulaRepository aulaRepository,ProfesorRepository profesorRepository){
+    private GroupRepository aulaRepository;
+    private ProfessorRepository professorRepository;
+
+    public RfidCodeMachine(LectorRepository lectorRepository, GroupRepository aulaRepository, ProfessorRepository professorRepository){
         this.lectorRepository = lectorRepository;
         this.aulaRepository = aulaRepository;
-        this.profesorRepository = profesorRepository;
+        this.professorRepository = professorRepository;
     }
 
     @RequestMapping("/assigncodemachine")
@@ -29,13 +30,13 @@ public class RfidCodeMachine {
                                   @RequestParam(value = "AulaId", defaultValue = "null") String AulaId,
                                   @RequestParam(value = "TeacherId", defaultValue = "null") String TeacherId){
 
-        Optional<Profesor> profesor = profesorRepository.findById(Integer.parseInt(TeacherId));
+        Optional<Professor> profesor = professorRepository.findById(Integer.parseInt(TeacherId));
 
-        if (profesor.isPresent() && profesor.get().isAdministrador() ){
+        if (profesor.isPresent() && profesor.get().getGroup() != null ){
             Optional<Lector> lector = lectorRepository.findById(Integer.parseInt(LectorId));
-            Optional<Aula> aula = aulaRepository.findById(Integer.parseInt(AulaId));
+            Optional<Group> aula = aulaRepository.findById(Integer.parseInt(AulaId));
 
-            lector.ifPresent(lector1 -> lector1.setAula(aula.get()));
+            lector.ifPresent(lector1 -> lector1.setGroup(aula.get()));
             lectorRepository.save(lector.get());
         }
 

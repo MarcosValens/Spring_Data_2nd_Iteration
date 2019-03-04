@@ -1,17 +1,21 @@
-package com.esliceu.rfidpass.amarillo.gestordedatos.entities.database;
+package com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 @Entity
-public class SchoolRoom { //Aulas que se ven que no son utiles
+@Table(name = "Curso")
+public class Course {
 
     @Id
     private Integer code;
 
     private String description;
 
-    public SchoolRoom(){}
+    public Course(){
+    }
 
     public Integer getCode() {
         return code;
@@ -28,5 +32,4 @@ public class SchoolRoom { //Aulas que se ven que no son utiles
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

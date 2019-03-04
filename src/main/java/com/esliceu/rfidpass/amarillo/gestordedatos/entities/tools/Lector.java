@@ -1,15 +1,13 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools;
 
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Fichaje;
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures.Aula;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Group;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Signing;
 
 import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -21,11 +19,11 @@ public class Lector {
     private String id;
 
     @OneToMany(mappedBy = "lector")
-    private Set<Fichaje> fichajes;
+    private Set<Signing> signings;
 
     @OneToOne
-    @JoinColumn(name = "Id", nullable = false)
-    private Aula aula;
+    @JoinColumn(name = "grupo_code", nullable = false)
+    private Group group;
 
     public Lector() {
 
@@ -39,19 +37,19 @@ public class Lector {
         this.id = id;
     }
 
-    public Set<Fichaje> getFichajes() {
-        return fichajes;
+    public Set<Signing> getSignings() {
+        return signings;
     }
 
-    public void setFichajes(Set<Fichaje> fichajes) {
-        this.fichajes = fichajes;
+    public void setSignings(Set<Signing> signings) {
+        this.signings = signings;
     }
 
-    public Aula getAula() {
-        return aula;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setAula(Aula aula) {
-        this.aula = aula;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }

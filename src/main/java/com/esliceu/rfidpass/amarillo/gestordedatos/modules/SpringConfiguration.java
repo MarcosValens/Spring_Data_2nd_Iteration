@@ -1,6 +1,6 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.modules;
 
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Tarjeta;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Card;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class SpringConfiguration {
 
     @Bean
-    public Tarjeta tarjeta(){
-        return new Tarjeta();
+    public Card tarjeta(){
+        return new Card();
     }
 
 }

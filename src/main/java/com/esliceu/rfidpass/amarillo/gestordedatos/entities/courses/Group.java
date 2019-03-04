@@ -1,7 +1,7 @@
-package com.esliceu.rfidpass.amarillo.gestordedatos.entities.database;
+package com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses;
 
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.structures.Asignatura;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Lector;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Student;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -24,7 +24,10 @@ public class Group {
     private Lector lector;
 
     @OneToMany(mappedBy = "grupo")
-    private Set<Asignatura> asignaturas;
+    private Set<Subject> subjects;
+
+    @OneToMany(mappedBy = "grupo")
+    private Set<Student> students;
 
     public Group() {}
 
@@ -52,5 +55,21 @@ public class Group {
 
     public void setLector(Lector lector) {
         this.lector = lector;
+    }
+
+    public Set<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 }
