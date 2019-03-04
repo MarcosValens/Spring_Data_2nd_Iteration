@@ -35,12 +35,8 @@ public class FichajeConsulter {
             Set<Student> users = group.getStudents();
             for (Student student : users) {
                 List<Signing> studentSignings = signingRepository.findByUsuario(student);
-                StringBuilder name = new StringBuilder();
-
-                name.append(student.getName());
-                name.append(" ");
-                name.append(student.getFirstSurname());
-                signings.put(name.toString(), studentSignings);
+                String name = student.getName() + " " +student.getFirstSurname();
+                signings.put(name, studentSignings);
             }
         });
         return signings;
