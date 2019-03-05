@@ -80,10 +80,10 @@
             <artifactId>jaxb-api</artifactId>
         </dependency>
         <!-- https://mvnrepository.com/artifact/javax.activation/activation -->
-        <dependency>
+        <!-- <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
-        </dependency>
+        </dependency> -->
         <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
         <dependency>
             <groupId>org.glassfish.jaxb</groupId>
