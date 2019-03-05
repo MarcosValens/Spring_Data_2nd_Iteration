@@ -1,7 +1,6 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.users;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Signing;
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Card;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -24,8 +23,7 @@ public class User {
     private String username;
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Card card;
+    private String rfid;
 
     @OneToMany(mappedBy = "user")
     private Set<Signing> signing;
@@ -70,12 +68,12 @@ public class User {
         this.password = password;
     }
 
-    public Card getCard() {
-        return card;
+    public String getRfid() {
+        return rfid;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setRfid(String rfid) {
+        this.rfid = rfid;
     }
 
     public Set<Signing> getSigning() {
