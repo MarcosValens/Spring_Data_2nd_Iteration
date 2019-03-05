@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProfessorSessionRepository extends CrudRepository<ProfessorSession, Integer> {
 
-    ProfessorSession findByProfessor_Id(Integer id);
+    ProfessorSession findByProfessor_Code(String code);
 
 }

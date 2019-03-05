@@ -14,11 +14,9 @@ import java.util.Locale;
 @Table(name = "Profesor_Sesiones")
 public class ProfessorSession { //Clases de un profesor
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    @Id private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "profesor_code")
     private Professor professor;
 

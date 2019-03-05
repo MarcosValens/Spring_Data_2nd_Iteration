@@ -14,8 +14,10 @@ public class User {
 
     @Id
     @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String code;
     private String name;
     private String firstSurname;
     private String secondSurname;
@@ -27,14 +29,6 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Signing> signing;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -90,5 +84,21 @@ public class User {
 
     public void setSigning(Set<Signing> signing) {
         this.signing = signing;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

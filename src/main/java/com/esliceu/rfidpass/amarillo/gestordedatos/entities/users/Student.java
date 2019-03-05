@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Estudiante")
-@DiscriminatorValue("2")
 public class Student extends User {
 
     @ManyToOne

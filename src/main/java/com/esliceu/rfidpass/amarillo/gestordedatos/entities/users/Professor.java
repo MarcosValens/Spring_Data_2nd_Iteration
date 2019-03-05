@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Profesor")
-@DiscriminatorValue("1")
 public class Professor extends User {
 
     @OneToOne
@@ -21,5 +20,15 @@ public class Professor extends User {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    @Override
+    public String getCode() {
+        return super.getCode();
+    }
+
+    @Override
+    public void setCode(String code) {
+        super.setCode(code);
     }
 }

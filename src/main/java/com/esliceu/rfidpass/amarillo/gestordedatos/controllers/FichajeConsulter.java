@@ -28,7 +28,7 @@ public class FichajeConsulter {
     @RequestMapping("/getfichajes")
     public Map<String, List<Signing>> getFichajes(@RequestParam(value = "TeacherId", defaultValue = "null") String TeacherId){
 
-        Optional<Professor> teacher = ProfessorRepository.findById(Integer.parseInt(TeacherId));
+        Optional<Professor> teacher = ProfessorRepository.findById(Integer.valueOf(TeacherId));
 
         Group grupoProfesor = teacher.get().getGroup();
         Set<Student> usuariosGrupo= grupoProfesor.getStudents();

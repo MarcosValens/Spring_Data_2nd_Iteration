@@ -6,17 +6,16 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Student;
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.format.TextStyle;
+import java.util.List;
 import java.util.Locale;
 
 @Entity
 @Table(name = "Estudiante_Sesiones")
 public class StudentSession { //Horas de la sesiones con la asignatura.
 
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    @Id private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Student student;
 
     @ManyToOne
@@ -31,12 +30,6 @@ public class StudentSession { //Horas de la sesiones con la asignatura.
 
     public String getDay() {
         return day;
-    }
-
-    public void setDay(int day) {
-        Locale spanishLocale = new Locale("es", "ES");
-        String dayName = DayOfWeek.of(day).getDisplayName(TextStyle.FULL,spanishLocale);
-        this.day = dayName;
     }
 
     public String getStartHour() {
@@ -79,6 +72,19 @@ public class StudentSession { //Horas de la sesiones con la asignatura.
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentSession{" +
+                "id=" + id +
+                ", student=" + student +
+                ", subject=" + subject +
+                ", day='" + day + '\'' +
+                ", StartHour='" + StartHour + '\'' +
+                ", durada=" + durada +
+                ", endHour='" + endHour + '\'' +
+                '}';
     }
 }
 

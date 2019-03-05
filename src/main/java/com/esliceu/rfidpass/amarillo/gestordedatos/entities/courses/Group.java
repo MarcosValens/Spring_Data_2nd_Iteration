@@ -10,8 +10,7 @@ import java.util.Set;
 @Table(name = "Grupo") // Grupos como el A, B
 public class Group {
 
-    @Id
-    private Integer code;
+    @Id private Integer code;
 
     private String name;
 
@@ -20,7 +19,7 @@ public class Group {
     private Course course;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Id", nullable = false)
+    @JoinColumn(name = "Id")
     private Lector lector;
 
     @OneToMany(mappedBy = "group")

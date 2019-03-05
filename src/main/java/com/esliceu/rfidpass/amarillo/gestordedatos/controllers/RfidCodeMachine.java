@@ -16,28 +16,32 @@ import java.util.Optional;
 public class RfidCodeMachine {
 
     private LectorRepository lectorRepository;
-    private GroupRepository aulaRepository;
+    private GroupRepository groupRepository;
     private ProfessorRepository professorRepository;
 
-    public RfidCodeMachine(LectorRepository lectorRepository, GroupRepository aulaRepository, ProfessorRepository professorRepository){
+    public RfidCodeMachine(LectorRepository lectorRepository, GroupRepository groupRepository, ProfessorRepository professorRepository){
         this.lectorRepository = lectorRepository;
-        this.aulaRepository = aulaRepository;
+        this.groupRepository = groupRepository;
         this.professorRepository = professorRepository;
     }
 
     @RequestMapping("/assigncodemachine")
-    public void assigncodemachine(@RequestParam(value = "LectorId", defaultValue = "null") String LectorId,
-                                  @RequestParam(value = "AulaId", defaultValue = "null") String AulaId,
-                                  @RequestParam(value = "TeacherId", defaultValue = "null") String TeacherId){
+    public void assigncodemachine(@RequestParam(value = "lectorId", defaultValue = "null") String lectorId,
+                                  @RequestParam(value = "groupId", defaultValue = "null") String groupId,
+                                  @RequestParam(value = "teacherId", defaultValue = "null") String teacherId){
 
-        Optional<Professor> profesor = professorRepository.findById(Integer.parseInt(TeacherId));
+        Optional<Professor> profesor = professorRepository.findById(Integer.valueOf(teacherId));
 
         if (profesor.isPresent() && profesor.get().getGroup() != null ){
-            Optional<Lector> lector = lectorRepository.findById(Integer.parseInt(LectorId));
-            Optional<Group> aula = aulaRepository.findById(Integer.parseInt(AulaId));
+            Optional<Lector> opt_lector = lectorRepository.findById(Integer.parseInt(lectorId));
+            Optional<Group> opt_group = groupRepository.findById(Integer.parseInt(groupId));
 
-            lector.ifPresent(lector1 -> lector1.setGroup(aula.get()));
-            lectorRepository.save(lector.get());
+            opt_lector.ifPresent(lector -> opt_group.ifPresent(group -> {
+                lector.setGroup(group);
+                group.setLector(lector);
+                lectorRepository.save(lector);
+                groupRepository.save(group);
+            }));
         }
 
     }

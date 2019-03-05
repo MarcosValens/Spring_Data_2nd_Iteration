@@ -10,8 +10,6 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Student;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.List;
-
 public class DataContainer {
 
     private Iterable<Course> courses;
@@ -19,7 +17,7 @@ public class DataContainer {
     private Iterable<Professor> professors;
     private Iterable<ProfessorSession> professorSessions;
     private Iterable<Student> students;
-    private List studentSessions;
+    private Iterable<StudentSession> studentSessions;
     private Iterable<SchoolRoom> schoolRooms;
     private Iterable<Subject> subjects;
     private Long numberOfStudentSessions;
@@ -71,7 +69,7 @@ public class DataContainer {
         return studentSessions;
     }
 
-    public void setStudentSessions(List studentSessions) {
+    public void setStudentSessions(Iterable<StudentSession> studentSessions) {
         this.studentSessions = studentSessions;
     }
 

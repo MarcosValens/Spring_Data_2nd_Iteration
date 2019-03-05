@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface StudentSessionRepository extends CrudRepository<StudentSession, Integer> {
 
-    StudentSession findByStudent_Id(Integer id);
+    StudentSession findByStudent_Code(String code);
 
 }
