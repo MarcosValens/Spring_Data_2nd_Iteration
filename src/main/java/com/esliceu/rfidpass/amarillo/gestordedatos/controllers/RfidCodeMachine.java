@@ -33,10 +33,10 @@ public class RfidCodeMachine {
         Optional<Professor> profesor = professorRepository.findById(Integer.valueOf(teacherId));
 
         if (profesor.isPresent() && profesor.get().getGroup() != null ){
-            Optional<Lector> opt_lector = lectorRepository.findById(Integer.parseInt(lectorId));
-            Optional<Group> opt_group = groupRepository.findById(Integer.parseInt(groupId));
+            Optional<Lector> optLector = lectorRepository.findById(Integer.parseInt(lectorId));
+            Optional<Group> optGroup = groupRepository.findById(Integer.parseInt(groupId));
 
-            opt_lector.ifPresent(lector -> opt_group.ifPresent(group -> {
+            optLector.ifPresent(lector -> optGroup.ifPresent(group -> {
                 lector.setGroup(group);
                 group.setLector(lector);
                 lectorRepository.save(lector);

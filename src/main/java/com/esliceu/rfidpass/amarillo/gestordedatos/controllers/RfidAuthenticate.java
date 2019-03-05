@@ -37,7 +37,6 @@ public class RfidAuthenticate {
 
         System.out.println(fichajeResponse.toString());
 
-
         User usuario = userRepository.findByRfid(fichajeResponse.getRFID());
         int valueToSend;
 
