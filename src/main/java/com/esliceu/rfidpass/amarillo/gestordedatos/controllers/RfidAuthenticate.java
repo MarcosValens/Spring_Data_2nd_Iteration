@@ -6,9 +6,7 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Signing;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.User;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.FichajeResponse;
-import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.SigningRepository;
-import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.SubjectRepository;
-import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.UserRepository;
+import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +21,20 @@ public class RfidAuthenticate {
     private final UserRepository userRepository;
     private final SigningRepository signingRepository;
     private final SubjectRepository asignaturaRepository;
-
+    private final ProfessorSessionRepository professorSessionRepository;
+    private final StudentSessionRepository studentSessionRepository;
     @Autowired
     public RfidAuthenticate(UserRepository userRepository,
-                            SigningRepository signingRepository, SubjectRepository asignaturaRepository) {
+                            SigningRepository signingRepository,
+                            SubjectRepository asignaturaRepository,
+                            ProfessorSessionRepository professorSessionRepository,
+                            StudentSessionRepository studentSessionRepository
+                            ) {
         this.userRepository = userRepository;
         this.signingRepository = signingRepository;
         this.asignaturaRepository = asignaturaRepository;
+        this.professorSessionRepository = professorSessionRepository;
+        this.studentSessionRepository = studentSessionRepository;
     }
 
     @RequestMapping("/validate")
@@ -68,8 +73,14 @@ public class RfidAuthenticate {
     }
 
     private boolean isOnTime(Signing fichage, Subject asignatura, User usuario) {
+        Integer offset = 10;
         String now = fichage.getDate();
-
+        String sessionStartDate = usuario instanceof Professor ?
+                professorSessionRepository.findBySubject(asignatura).getStartHour() :
+                studentSessionRepository.findBySubject(asignatura).getStartHour();
+        String[] dateSplit = sessionStartDate.split(":");
+        Integer sessionStartDateWithOffset = Integer.parseInt(dateSplit[1]) + offset;
+        sessionStartDate = dateSplit[0]+":"+sessionStartDateWithOffset;
         //return asignatura.getHora().equals(now) && usuario.getAsignaturas().contains(asignatura);
 
         return false;

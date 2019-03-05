@@ -1,5 +1,6 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.users;
 
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.Absence;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Signing;
 
 import javax.persistence.*;
@@ -27,6 +28,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Signing> signing;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Absence> absences;
 
     public String getName() {
         return name;
