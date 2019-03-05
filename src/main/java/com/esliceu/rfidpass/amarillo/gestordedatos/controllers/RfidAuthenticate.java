@@ -3,12 +3,11 @@ package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Subject;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Signing;
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Card;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.User;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.FichajeResponse;
-import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.SubjectRepository;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.SigningRepository;
+import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.SubjectRepository;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,15 +21,13 @@ import java.util.Optional;
 public class RfidAuthenticate {
 
     private final UserRepository userRepository;
-    private final Card card;
     private final SigningRepository signingRepository;
     private final SubjectRepository asignaturaRepository;
 
     @Autowired
-    public RfidAuthenticate(UserRepository userRepository, Card card,
+    public RfidAuthenticate(UserRepository userRepository,
                             SigningRepository signingRepository, SubjectRepository asignaturaRepository) {
         this.userRepository = userRepository;
-        this.card = card;
         this.signingRepository = signingRepository;
         this.asignaturaRepository = asignaturaRepository;
     }
@@ -40,15 +37,14 @@ public class RfidAuthenticate {
 
         System.out.println(fichajeResponse.toString());
 
-        card.setId(fichajeResponse.getRFID());
 
-        User usuario = userRepository.findByCard(card);
+        User usuario = userRepository.findByRfid(fichajeResponse.getRFID());
         int valueToSend;
 
         if (usuario instanceof Professor) {
             valueToSend = ((Professor) usuario).getGroup() != null ? 2 : 1;
         } else {
-            valueToSend = userRepository.existsByCard(card) ? 1 : 0;
+            valueToSend = userRepository.existsByRfid(usuario.getRfid()) ? 1 : 0;
         }
 
         return valueToSend;
