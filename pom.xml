@@ -73,22 +73,6 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
-
-
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.activation/activation -->
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

@@ -72,6 +72,10 @@ public class DataController {
         studentSessionRepository.saveAll(data.getStudentSessions());
         System.out.println("Sessiones de los estudiantes añadidos");
 
+        for (int i = 0; i < data.getNumberOfStudentSessions(); i += 50000) {
+
+        }
+
         return true;
     }
 
