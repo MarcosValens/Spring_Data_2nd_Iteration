@@ -13,7 +13,7 @@ import java.util.Locale;
 @Entity
 @Table(name = "Profesor_Sesiones")
 @DiscriminatorValue("11")
-public class ProfessorSession extends Session{ //Clases de un profesor
+public class ProfessorSession extends Session { //Clases de un profesor
 
     @ManyToOne
     @JoinColumn(name = "grupo_code")
@@ -23,7 +23,8 @@ public class ProfessorSession extends Session{ //Clases de un profesor
     @JoinColumn(name = "curso_code")
     private Course course;
 
-    public ProfessorSession() {}
+    public ProfessorSession() {
+    }
 
     public Group getGroup() {
         return group;
