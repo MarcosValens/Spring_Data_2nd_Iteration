@@ -65,11 +65,10 @@ public class RfidAuthenticate {
         User user = userRepository.findByRfid(fichajeResponse.getRFID());
         String weekDay = fichajeResponse.getWeekDay().toString();
         List<Session> daySessions = sessionRepository.findByDay(weekDay);
-        Subject subjectFound;
 
         try {
             Date dateFichaje = format.parse(fichajeResponse.getTime());
-            subjectFound = getSubject(daySessions, format, user, dateFichaje);
+            Subject subjectFound = getSubject(daySessions, format, user, dateFichaje);
             if (!onTime(fichajeResponse, subjectFound, format)){
                 Absence absence = new Absence(fichajeResponse.getDate(), fichajeResponse.getTime(), subjectFound, user);
                 absenceRepository.save(absence);
@@ -81,25 +80,23 @@ public class RfidAuthenticate {
     }
 
     private Subject getSubject(List<Session> sessions, SimpleDateFormat formatter, User user, Date dateFichaje) {
-        sessionRepository.findByUser(user);
-        List<Session> userSessions;
-        userSessions = sessions.stream().filter(sessions::contains).collect(Collectors.toList());
-        Subject subject = null;
+        List<Session> userSessions = sessionRepository.findByUser(user);
+        userSessions = userSessions.stream().filter(sessions::contains).collect(Collectors.toList());
         Date subjectDateStart;
         Date subjectDateEnd;
         try {
             for (Session session : userSessions) {
                 subjectDateStart = formatter.parse(session.getStartHour());
                 subjectDateEnd = formatter.parse(session.getEndHour());
-                subject = dateFichaje.compareTo(subjectDateStart) >= 0 && dateFichaje.compareTo(subjectDateEnd) <= 0
-                        ? session.getSubject() : subject;
-
+                if (dateFichaje.compareTo(subjectDateStart) >= 0 && dateFichaje.compareTo(subjectDateEnd) <= 0) {
+                    return session.getSubject();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return subject;
+        return null;
     }
 
     private boolean onTime(FichajeResponse fichajeResponse, Subject subject, SimpleDateFormat format) throws ParseException {
