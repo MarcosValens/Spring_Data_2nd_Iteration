@@ -21,8 +21,6 @@ public class DataController {
     private final ProfessorRepository professorRepository;
     private final SchoolRoomRepository schoolRoomRepository;
     private final SubjectRepository subjectRepository;
-    private final SessionRepository sessionRepository;
-    private final UserRepository userRepository;
     private final StudentSessionRepository studentSessionRepository;
     private final ProfessorSessionRepository professorSessionRepository;
 
@@ -33,7 +31,8 @@ public class DataController {
                           ProfessorRepository professorRepository,
                           SchoolRoomRepository schoolRoomRepository,
                           SubjectRepository subjectRepository,
-                          SessionRepository sessionRepository, UserRepository userRepository, StudentSessionRepository studentSessionRepository, ProfessorSessionRepository professorSessionRepository) {
+                          StudentSessionRepository studentSessionRepository,
+                          ProfessorSessionRepository professorSessionRepository) {
 
         this.courseRepository = courseRepository;
         this.groupRepository = groupRepository;
@@ -41,8 +40,6 @@ public class DataController {
         this.professorRepository = professorRepository;
         this.schoolRoomRepository = schoolRoomRepository;
         this.subjectRepository = subjectRepository;
-        this.sessionRepository = sessionRepository;
-        this.userRepository = userRepository;
         this.studentSessionRepository = studentSessionRepository;
         this.professorSessionRepository = professorSessionRepository;
     }
@@ -68,12 +65,6 @@ public class DataController {
 
         schoolRoomRepository.saveAll(data.getSchoolRooms());
         System.out.println("Aulas añadidas");
-
-        /*sessionRepository.saveAll(data.getProfessorSessions());
-        System.out.println("Sessiones de los profesores añadidos");
-
-        sessionRepository.saveAll(data.getStudentSessions());
-        System.out.println("Sessiones de los estudiantes añadidos");*/
 
         professorSessionRepository.saveAll(data.getProfessorSessions());
         System.out.println("Sessiones de los profesores añadidos");
