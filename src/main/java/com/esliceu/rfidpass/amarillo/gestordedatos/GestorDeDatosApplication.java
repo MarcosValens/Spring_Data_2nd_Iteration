@@ -8,5 +8,4 @@ public class GestorDeDatosApplication {
     public static void main(String[] args) {
         SpringApplication.run(GestorDeDatosApplication.class, args);
     }
-
 }

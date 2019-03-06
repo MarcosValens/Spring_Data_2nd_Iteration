@@ -14,7 +14,7 @@ public class Group {
 
     private String name;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "course_code")
     private Course course;
 

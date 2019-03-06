@@ -30,9 +30,6 @@ public class User {
     private Set<Signing> signing;
 
     @OneToMany(mappedBy = "user")
-    private Set<Session> sessions;
-
-    @OneToMany(mappedBy = "user")
     private Set<Absence> absences;
 
     public String getName() {
@@ -113,13 +110,5 @@ public class User {
 
     public void setAbsences(Set<Absence> absences) {
         this.absences = absences;
-    }
-
-    public Set<Session> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(Set<Session> sessions) {
-        this.sessions = sessions;
     }
 }
