@@ -6,8 +6,8 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.User;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Profesor")
 @DiscriminatorValue("1")
+@Table(name = "Professor")
 public class Professor extends User {
 
     @OneToOne

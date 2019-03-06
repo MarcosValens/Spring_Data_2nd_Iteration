@@ -5,8 +5,8 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Group;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Estudiante")
 @DiscriminatorValue("2")
+@Table(name = "Student")
 public class Student extends User {
 
     @ManyToOne

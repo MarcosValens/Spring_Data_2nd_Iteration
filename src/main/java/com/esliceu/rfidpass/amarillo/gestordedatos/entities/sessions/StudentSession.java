@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Estudiante_Sesiones")
 @DiscriminatorValue("22")
+@Table(name = "StudentSession")
 public class StudentSession extends Session{ //Horas de la sesiones con la asignatura.
 
 }

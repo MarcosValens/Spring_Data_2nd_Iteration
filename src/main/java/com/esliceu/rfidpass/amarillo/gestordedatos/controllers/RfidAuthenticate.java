@@ -24,7 +24,7 @@ import java.util.List;
 
 @RestController
 public class RfidAuthenticate {
-
+    /*
     private final UserRepository userRepository;
     private final SigningRepository signingRepository;
     private final SubjectRepository asignaturaRepository;
@@ -117,6 +117,6 @@ public class RfidAuthenticate {
         //return asignatura.getHora().equals(now) && usuario.getAsignaturas().contains(asignatura);
 
         return false;
-    }
+    }*/
 
 }

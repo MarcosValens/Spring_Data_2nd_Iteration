@@ -5,8 +5,7 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.User;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "Fichaje") //Unir con los fixajes con los ProfessorSession.
+@Entity //Unir con los fixajes con los ProfessorSession.
 public class Signing {
 
     @Id

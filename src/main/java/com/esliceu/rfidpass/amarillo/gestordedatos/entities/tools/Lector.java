@@ -22,7 +22,7 @@ public class Lector {
     private Set<Signing> signings;
 
     @OneToOne
-    @JoinColumn(name = "grupo_code", nullable = false)
+    @JoinColumn(name = "group_code", nullable = false)
     private Group group;
 
     public Lector() {

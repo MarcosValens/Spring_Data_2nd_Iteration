@@ -19,30 +19,32 @@ public class DataController {
     private final GroupRepository groupRepository;
     private final StudentRepository studentRepository;
     private final ProfessorRepository professorRepository;
-    private final ProfessorSessionRepository sessionProfessorRepository;
-    private final StudentSessionRepository sessionStudentRepository;
     private final SchoolRoomRepository schoolRoomRepository;
     private final SubjectRepository subjectRepository;
-
+    private final SessionRepository sessionRepository;
+    private final UserRepository userRepository;
+    private final StudentSessionRepository studentSessionRepository;
+    private final ProfessorSessionRepository professorSessionRepository;
 
     @Autowired
     public DataController(CourseRepository courseRepository,
                           GroupRepository groupRepository,
                           StudentRepository studentRepository,
                           ProfessorRepository professorRepository,
-                          ProfessorSessionRepository sessionProfessorRepository,
-                          StudentSessionRepository sessionStudentRepository,
                           SchoolRoomRepository schoolRoomRepository,
-                          SubjectRepository subjectRepository) {
+                          SubjectRepository subjectRepository,
+                          SessionRepository sessionRepository, UserRepository userRepository, StudentSessionRepository studentSessionRepository, ProfessorSessionRepository professorSessionRepository) {
 
         this.courseRepository = courseRepository;
         this.groupRepository = groupRepository;
         this.studentRepository = studentRepository;
         this.professorRepository = professorRepository;
-        this.sessionProfessorRepository = sessionProfessorRepository;
-        this.sessionStudentRepository = sessionStudentRepository;
         this.schoolRoomRepository = schoolRoomRepository;
         this.subjectRepository = subjectRepository;
+        this.sessionRepository = sessionRepository;
+        this.userRepository = userRepository;
+        this.studentSessionRepository = studentSessionRepository;
+        this.professorSessionRepository = professorSessionRepository;
     }
 
     // Servicio lila para crear / actualizar la base de datos.
@@ -67,10 +69,16 @@ public class DataController {
         schoolRoomRepository.saveAll(data.getSchoolRooms());
         System.out.println("Aulas añadidas");
 
-        sessionProfessorRepository.saveAll(data.getProfessorSessions());
+        /*sessionRepository.saveAll(data.getProfessorSessions());
         System.out.println("Sessiones de los profesores añadidos");
 
-        sessionStudentRepository.saveAll(data.getStudentSessions());
+        sessionRepository.saveAll(data.getStudentSessions());
+        System.out.println("Sessiones de los estudiantes añadidos");*/
+
+        professorSessionRepository.saveAll(data.getProfessorSessions());
+        System.out.println("Sessiones de los profesores añadidos");
+
+        studentSessionRepository.saveAll(data.getStudentSessions());
         System.out.println("Sessiones de los estudiantes añadidos");
 
         return true;

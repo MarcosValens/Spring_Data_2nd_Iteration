@@ -2,18 +2,18 @@ package com.esliceu.rfidpass.amarillo.gestordedatos.entities.users;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.Absence;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Signing;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.Session;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "Usuario_type", discriminatorType = DiscriminatorType.INTEGER)
-@Table(name = "Usuario")
+@DiscriminatorColumn(name = "User_type", discriminatorType = DiscriminatorType.INTEGER)
+@Table(name = "User")
 public class User {
 
     @Id
-    @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -28,6 +28,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Signing> signing;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Session> sessions;
 
     @OneToMany(mappedBy = "user")
     private Set<Absence> absences;
@@ -102,5 +105,21 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Set<Absence> getAbsences() {
+        return absences;
+    }
+
+    public void setAbsences(Set<Absence> absences) {
+        this.absences = absences;
+    }
+
+    public Set<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(Set<Session> sessions) {
+        this.sessions = sessions;
     }
 }
