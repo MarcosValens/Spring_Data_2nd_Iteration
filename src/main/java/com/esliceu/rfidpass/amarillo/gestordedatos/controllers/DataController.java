@@ -83,6 +83,7 @@ public class DataController {
         return new ArrayList<>();
     }
 
+
     @RequestMapping(value = "/getRooms", method = RequestMethod.GET)
     public Iterable<SchoolRoom> getRooms() {
         return schoolRoomRepository.findAll();
