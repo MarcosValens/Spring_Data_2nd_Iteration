@@ -74,12 +74,15 @@ public class RfidAuthenticate {
     private boolean isOnTime(Signing fichage, Subject asignatura, User usuario) {
         Integer offset = 10;
         String now = fichage.getDate();
+
         String sessionStartDate = usuario instanceof Professor ?
                 professorSessionRepository.findBySubject(asignatura).getStartHour() :
                 studentSessionRepository.findBySubject(asignatura).getStartHour();
         String[] dateSplit = sessionStartDate.split(":");
         Integer sessionStartDateWithOffset = Integer.parseInt(dateSplit[1]) + offset;
         sessionStartDate = dateSplit[0]+":"+sessionStartDateWithOffset;
+
+
         //return asignatura.getHora().equals(now) && usuario.getAsignaturas().contains(asignatura);
 
         return false;

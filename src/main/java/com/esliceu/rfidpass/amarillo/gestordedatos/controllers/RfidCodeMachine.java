@@ -25,7 +25,7 @@ public class RfidCodeMachine {
         this.professorRepository = professorRepository;
     }
 
-    @RequestMapping("/assigncodemachine")
+    @RequestMapping("/assignCodeMachine")
     public void assigncodemachine(@RequestParam(value = "lectorId", defaultValue = "null") String lectorId,
                                   @RequestParam(value = "groupId", defaultValue = "null") String groupId,
                                   @RequestParam(value = "teacherId", defaultValue = "null") String teacherId){

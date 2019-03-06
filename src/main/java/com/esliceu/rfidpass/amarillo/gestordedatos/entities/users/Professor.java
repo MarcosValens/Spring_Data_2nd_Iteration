@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Profesor")
+@DiscriminatorValue("1")
 public class Professor extends User {
 
     @OneToOne

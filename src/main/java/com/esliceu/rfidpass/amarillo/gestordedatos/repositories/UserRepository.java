@@ -8,4 +8,5 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     User findByRfid(String rfid);
     boolean existsByRfid(String rfid);
 
+
 }

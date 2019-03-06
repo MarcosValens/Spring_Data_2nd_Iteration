@@ -16,6 +16,8 @@ public class Absence {
 
     private String date;
     private String hour;
+
+    @ManyToOne
     private Subject subject;
 
     @ManyToOne(fetch = FetchType.LAZY)

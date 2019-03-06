@@ -1,10 +1,7 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses;
 
 
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Student;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "Asignatura")
