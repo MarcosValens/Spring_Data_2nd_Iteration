@@ -13,14 +13,11 @@ public class Session {
 
     @Id private Long id;
 
-    @ManyToOne(cascade=CascadeType.ALL)
-    private User user;
-
     @ManyToOne
     private Subject subject;
 
     private String day;
-    private String StartHour;
+    private String startHour;
     private Integer durada;
     private String endHour;
 
@@ -30,14 +27,6 @@ public class Session {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public Subject getSubject() {
@@ -57,11 +46,11 @@ public class Session {
     }
 
     public String getStartHour() {
-        return StartHour;
+        return startHour;
     }
 
     public void setStartHour(String startHour) {
-        StartHour = startHour;
+        this.startHour = startHour;
     }
 
     public Integer getDurada() {

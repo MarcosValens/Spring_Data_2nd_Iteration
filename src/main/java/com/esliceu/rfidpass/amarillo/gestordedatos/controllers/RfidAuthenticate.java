@@ -7,6 +7,7 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.register.Signing;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.ProfessorSession;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.Session;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.StudentSession;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.tools.Lector;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Student;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.User;
@@ -19,10 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 public class RfidAuthenticate {
@@ -32,24 +31,32 @@ public class RfidAuthenticate {
     private final SubjectRepository asignaturaRepository;
     private final SessionRepository sessionRepository;
     private final AbsenceRepository absenceRepository;
+    private final StudentSessionRepository studentSessionRepository;
+    private final ProfessorSessionRepository professorSessionRepository;
+    private final LectorRepository lectorRepository;
     @Autowired
     public RfidAuthenticate(UserRepository userRepository,
                             SigningRepository signingRepository,
                             SubjectRepository asignaturaRepository,
                             SessionRepository sessionRepository,
-                            AbsenceRepository absenceRepository
+                            StudentSessionRepository studentSessionRepository,
+                            ProfessorSessionRepository professorSessionRepository,
+                            AbsenceRepository absenceRepository,
+                            LectorRepository lectorRepository
     ) {
         this.userRepository = userRepository;
         this.signingRepository = signingRepository;
         this.asignaturaRepository = asignaturaRepository;
         this.sessionRepository = sessionRepository;
+        this.studentSessionRepository = studentSessionRepository;
+        this.professorSessionRepository = professorSessionRepository;
         this.absenceRepository = absenceRepository;
+        this.lectorRepository = lectorRepository;
     }
 
     @RequestMapping("/validate")
     public int validate(@RequestBody FichajeResponse fichajeResponse) {
 
-        System.out.println(fichajeResponse.toString());
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
         User usuario = userRepository.findByRfid(fichajeResponse.getRFID());
@@ -60,17 +67,24 @@ public class RfidAuthenticate {
         } else {
             valueToSend = userRepository.existsByRfid(usuario.getRfid()) ? 1 : 0;
         }
+        // Signing creation
+        String type = valueToSend == 2 ? "Admin" : valueToSend == 1 ? "Success" : "Error";
+        Optional<Lector> optLector = lectorRepository.findById(Integer.parseInt(fichajeResponse.getIdMachine()));
+        optLector.ifPresent(lector1 -> {
+            Signing signing = new Signing(type, fichajeResponse.getDate(), lector1, usuario);
+            signingRepository.save(signing);
+        });
 
-        User user = userRepository.findByRfid(fichajeResponse.getRFID());
+
+        // Absence creation
         String weekDay = fichajeResponse.getWeekDay().toString();
-        List<Session> sessions = sessionRepository.findByDay(weekDay);
-        Subject subjectFound;
+        List<Session> daySessions = sessionRepository.findByDay(weekDay);
 
         try {
             Date dateFichaje = format.parse(fichajeResponse.getTime());
-            subjectFound = getSubject(sessions, format, dateFichaje);
-            if (!onTime(fichajeResponse, subjectFound, user, format)){
-                Absence absence = new Absence(fichajeResponse.getDate(), fichajeResponse.getTime(), subjectFound, user);
+            Subject subjectFound = getSubject(daySessions, format, usuario, dateFichaje);
+            if (!onTime(fichajeResponse, subjectFound, format)){
+                Absence absence = new Absence(fichajeResponse.getDate(), fichajeResponse.getTime(), subjectFound, usuario);
                 absenceRepository.save(absence);
             }
         } catch (ParseException e) {
@@ -79,26 +93,28 @@ public class RfidAuthenticate {
         return valueToSend;
     }
 
-    private Subject getSubject(List<Session> sessions, SimpleDateFormat formatter, Date dateFichaje) {
-        Subject subject = null;
+    private Subject getSubject(List<Session> sessions, SimpleDateFormat formatter, User user, Date dateFichaje) {
+        List<Session> userSessions = user instanceof Student ? studentSessionRepository.findByStudent((Student) user) :
+                professorSessionRepository.findByProfessor((Professor) user);
+        userSessions = userSessions.stream().filter(sessions::contains).collect(Collectors.toList());
         Date subjectDateStart;
         Date subjectDateEnd;
         try {
-            for (Session session : sessions) {
+            for (Session session : userSessions) {
                 subjectDateStart = formatter.parse(session.getStartHour());
                 subjectDateEnd = formatter.parse(session.getEndHour());
-                subject = dateFichaje.compareTo(subjectDateStart) >= 0 && dateFichaje.compareTo(subjectDateEnd) <= 0
-                        ? session.getSubject() : subject;
-
+                if (dateFichaje.compareTo(subjectDateStart) >= 0 && dateFichaje.compareTo(subjectDateEnd) <= 0) {
+                    return session.getSubject();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return subject;
+        return null;
     }
 
-    private boolean onTime(FichajeResponse fichajeResponse, Subject subject, User user, SimpleDateFormat format) throws ParseException {
+    private boolean onTime(FichajeResponse fichajeResponse, Subject subject, SimpleDateFormat format) throws ParseException {
         Integer offset = 10;
         String sessionStartDate = sessionRepository.findBySubject(subject).getStartHour();
         String[] dateSplit = sessionStartDate.split(":");

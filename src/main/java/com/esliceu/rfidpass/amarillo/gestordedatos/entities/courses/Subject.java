@@ -13,7 +13,7 @@ public class Subject { //Assignatura tiene un curso.
     private String description;
 
     @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "course_code")
+    @JoinColumn(name = "curso_code")
     private Course course;
 
     public Integer getCode() {

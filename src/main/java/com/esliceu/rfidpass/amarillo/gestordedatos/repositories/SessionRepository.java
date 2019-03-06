@@ -12,4 +12,5 @@ public interface SessionRepository extends CrudRepository<Session, Long> {
     Session findBySubject(Subject subject);
     List<Session> findByDay(String day);
 
+
 }

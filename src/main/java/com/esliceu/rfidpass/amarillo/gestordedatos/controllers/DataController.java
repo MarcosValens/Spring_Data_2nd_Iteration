@@ -1,6 +1,9 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
+
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Group;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.Absence;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.SchoolRoom;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Student;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.DataContainer;
@@ -20,10 +23,9 @@ public class DataController {
     private final ProfessorRepository professorRepository;
     private final SchoolRoomRepository schoolRoomRepository;
     private final SubjectRepository subjectRepository;
-    private final SessionRepository sessionRepository;
-    private final UserRepository userRepository;
     private final StudentSessionRepository studentSessionRepository;
     private final ProfessorSessionRepository professorSessionRepository;
+    private final AbsenceRepository absenceRepository;
 
     @Autowired
     public DataController(CourseRepository courseRepository,
@@ -32,7 +34,9 @@ public class DataController {
                           ProfessorRepository professorRepository,
                           SchoolRoomRepository schoolRoomRepository,
                           SubjectRepository subjectRepository,
-                          SessionRepository sessionRepository, UserRepository userRepository, StudentSessionRepository studentSessionRepository, ProfessorSessionRepository professorSessionRepository) {
+                          StudentSessionRepository studentSessionRepository,
+                          ProfessorSessionRepository professorSessionRepository,
+                          AbsenceRepository absenceRepository) {
 
         this.courseRepository = courseRepository;
         this.groupRepository = groupRepository;
@@ -40,10 +44,9 @@ public class DataController {
         this.professorRepository = professorRepository;
         this.schoolRoomRepository = schoolRoomRepository;
         this.subjectRepository = subjectRepository;
-        this.sessionRepository = sessionRepository;
-        this.userRepository = userRepository;
         this.studentSessionRepository = studentSessionRepository;
         this.professorSessionRepository = professorSessionRepository;
+        this.absenceRepository = absenceRepository;
     }
 
     // Servicio lila para crear / actualizar la base de datos.
@@ -68,12 +71,6 @@ public class DataController {
         schoolRoomRepository.saveAll(data.getSchoolRooms());
         System.out.println("Aulas añadidas");
 
-        /*sessionRepository.saveAll(data.getProfessorSessions());
-        System.out.println("Sessiones de los profesores añadidos");
-
-        sessionRepository.saveAll(data.getStudentSessions());
-        System.out.println("Sessiones de los estudiantes añadidos");*/
-
         professorSessionRepository.saveAll(data.getProfessorSessions());
         System.out.println("Sessiones de los profesores añadidos");
 
@@ -89,7 +86,6 @@ public class DataController {
 
         return new ArrayList<>();
     }
-
 
     // Endpoint per obtenir tots els alumnes:
     @RequestMapping(value = "/getAllStudents")
@@ -108,12 +104,26 @@ public class DataController {
 
 
         for(Student student : students){
-            if (student.getName().equals(name) && student.getFirstSurname().equals(surname1)){
+            if (student.getName().equals(name) && student.getFirstSurname().equals(surname)){
                 group = student.getGroup().toString();
             }
         }
 
         return group;
+
+    }
+
+    @RequestMapping(value = "/getRooms", method = RequestMethod.GET)
+    public Iterable<SchoolRoom> getRooms() {
+        return schoolRoomRepository.findAll();
+    }
+
+    @RequestMapping(value = "/validateAbsence", method = RequestMethod.POST)
+    public void validateAbsence(@RequestParam(value = "absences", defaultValue = "null") List<String> absences) {
+        for (String absence1 : absences) {
+            Absence absence = absenceRepository.findAbsenceById(Integer.valueOf(absence1));
+            absence.setValidated(true);
+        }
 
     }
 

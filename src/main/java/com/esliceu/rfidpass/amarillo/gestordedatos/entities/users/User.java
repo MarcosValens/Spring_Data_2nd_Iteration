@@ -14,7 +14,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String code;
@@ -28,9 +28,6 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<Signing> signing;
-
-    @OneToMany(mappedBy = "user")
-    private Set<Session> sessions;
 
     @OneToMany(mappedBy = "user")
     private Set<Absence> absences;
@@ -113,13 +110,5 @@ public class User {
 
     public void setAbsences(Set<Absence> absences) {
         this.absences = absences;
-    }
-
-    public Set<Session> getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(Set<Session> sessions) {
-        this.sessions = sessions;
     }
 }
