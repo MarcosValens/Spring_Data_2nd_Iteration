@@ -79,18 +79,23 @@ public class RfidAuthenticate {
     private Subject getSubject(List<Object> sessions, SimpleDateFormat formatter, Date dateFichaje) {
         Subject subject = null;
         Integer offset = 10;
-        Date subjectDate;
+        Date subjectDateStart;
+        Date subjectDateEnd;
         try {
             for (Object session : sessions) {
                 if (session instanceof StudentSession) {
 
                     StudentSession studentSession = (StudentSession) session;
-                    subjectDate = formatter.parse(studentSession.getStartHour());
-                    subject = dateFichaje.compareTo(subjectDate) >= 0 ? studentSession.getSubject() : subject;
+                    subjectDateStart = formatter.parse(studentSession.getStartHour());
+                    subjectDateEnd = formatter.parse(studentSession.getEndHour());
+                    subject = dateFichaje.compareTo(subjectDateStart) >= 0 && dateFichaje.compareTo(subjectDateEnd) <= 0
+                            ? studentSession.getSubject() : subject;
                 } else if (session instanceof ProfessorSession) {
                     ProfessorSession professorSession = (ProfessorSession) session;
-                    subjectDate = formatter.parse(professorSession.getStartHour());
-                    subject = dateFichaje.compareTo(subjectDate) >= 0 ? professorSession.getSubject() : subject;
+                    subjectDateStart = formatter.parse(professorSession.getStartHour());
+                    subjectDateEnd = formatter.parse(professorSession.getEndHour());
+                    subject = dateFichaje.compareTo(subjectDateStart) >= 0 && dateFichaje.compareTo(subjectDateEnd) <= 0
+                            ? professorSession.getSubject() : subject;
                 }
             }
         } catch(Exception e) {
