@@ -13,6 +13,9 @@ public class Signing {
     private Integer id;
 
     @Column(nullable = false)
+    private boolean checked = false;
+
+    @Column(nullable = false)
     private String type;
 
     @Column(nullable = false)
@@ -25,6 +28,13 @@ public class Signing {
     private User user;
 
     public Signing() {}
+
+    public Signing(String type, String date, Lector lector, User user) {
+        this.type = type;
+        this.date = date;
+        this.lector = lector;
+        this.user = user;
+    }
 
     public Integer getId() {
         return id;
@@ -64,5 +74,13 @@ public class Signing {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public boolean isChecked() {
+        return checked;
     }
 }
