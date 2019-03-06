@@ -10,5 +10,4 @@ import org.springframework.web.bind.annotation.RestController;
 public class DatabaseController {
     FixatgeMock fixatgee = new FixatgeMock();
 
-
 }

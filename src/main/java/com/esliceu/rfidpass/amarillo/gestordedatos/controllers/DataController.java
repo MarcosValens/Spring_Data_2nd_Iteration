@@ -1,9 +1,12 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
+
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Group;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.Absence;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.SchoolRoom;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.StudentSession;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Student;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.DataContainer;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.*;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -105,6 +108,32 @@ public class DataController {
         return new ArrayList<>();
     }
 
+    // Endpoint per obtenir tots els alumnes:
+    @RequestMapping(value = "/getAllStudents")
+    public List<Student> getAllStudents() {
+
+        return (List<Student>) studentRepository.findAll();
+
+    }
+
+    // Endpoint si fos necessari per obtenir el grup d'un alumne:
+    @RequestMapping(value = "/getStudentGroup", method = RequestMethod.POST)
+    public String getStudentGroup(@RequestParam("name") String name,
+                                  @RequestParam("surname") String surname){
+
+        List<Student> students = (List<Student>) studentRepository.findAll();
+        String group = new String();
+
+
+        for(Student student : students){
+            if (student.getName().equals(name) && student.getFirstSurname().equals(surname)){
+                group = student.getGroup().toString();
+            }
+        }
+
+        return group;
+
+    }
 
     @RequestMapping(value = "/getRooms", method = RequestMethod.GET)
     public Iterable<SchoolRoom> getRooms() {
@@ -119,5 +148,6 @@ public class DataController {
         }
 
     }
+
 
 }
