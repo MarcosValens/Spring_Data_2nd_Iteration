@@ -1,6 +1,7 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,8 +13,12 @@ public class FichajeResponse {
 
     @JsonProperty("hour")
     private String time;
-    private DiasSemana weekDay;
+    private String weekDay;
     private String idMachine;
+
+    @Autowired
+    public FichajeResponse() {
+    }
 
     public String getRFID() {
         return RFID;
@@ -39,11 +44,11 @@ public class FichajeResponse {
         this.time = time;
     }
 
-    public DiasSemana getWeekDay() {
+    public String getWeekDay() {
         return weekDay;
     }
 
-    public void setWeekDay(DiasSemana weekDay) {
+    public void setWeekDay(String weekDay) {
         this.weekDay = weekDay;
     }
 

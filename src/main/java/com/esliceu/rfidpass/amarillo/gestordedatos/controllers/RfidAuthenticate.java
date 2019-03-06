@@ -14,13 +14,17 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.User;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.FichajeResponse;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.awt.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,6 +38,7 @@ public class RfidAuthenticate {
     private final StudentSessionRepository studentSessionRepository;
     private final ProfessorSessionRepository professorSessionRepository;
     private final LectorRepository lectorRepository;
+
     @Autowired
     public RfidAuthenticate(UserRepository userRepository,
                             SigningRepository signingRepository,
@@ -54,26 +59,33 @@ public class RfidAuthenticate {
         this.lectorRepository = lectorRepository;
     }
 
-    @RequestMapping("/validate")
-    public int validate(@RequestBody FichajeResponse fichajeResponse) {
+    @RequestMapping(value = "/validate", method = RequestMethod.POST, consumes = "application/json")
+    public String validate(@RequestBody FichajeResponse fichajeResponse) {
 
         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
 
         User usuario = userRepository.findByRfid(fichajeResponse.getRFID());
         int valueToSend;
 
+        System.out.println("User" + usuario.toString());
+
         if (usuario instanceof Professor) {
             valueToSend = ((Professor) usuario).getGroup() != null ? 2 : 1;
         } else {
             valueToSend = userRepository.existsByRfid(usuario.getRfid()) ? 1 : 0;
         }
+
         // Signing creation
         String type = valueToSend == 2 ? "Admin" : valueToSend == 1 ? "Success" : "Error";
-        Optional<Lector> optLector = lectorRepository.findById(Integer.parseInt(fichajeResponse.getIdMachine()));
-        optLector.ifPresent(lector1 -> {
-            Signing signing = new Signing(type, fichajeResponse.getDate(), lector1, usuario);
-            signingRepository.save(signing);
-        });
+        Optional<Lector> optLector = lectorRepository.findByIdMachine(fichajeResponse.getIdMachine());
+        Lector lector = new Lector();
+        if (!optLector.isPresent()) {
+            lector.setIdMachine(fichajeResponse.getIdMachine());
+            lectorRepository.save(lector);
+        }
+        Signing signing = new Signing(type, fichajeResponse.getDate(), lector, usuario);
+        System.out.println("Signing: " + signing.toString());
+        signingRepository.save(signing);
 
 
         // Absence creation
@@ -83,14 +95,17 @@ public class RfidAuthenticate {
         try {
             Date dateFichaje = format.parse(fichajeResponse.getTime());
             Subject subjectFound = getSubject(daySessions, format, usuario, dateFichaje);
+            System.out.println("Subject: " + subjectFound);
             if (!onTime(fichajeResponse, subjectFound, format)){
                 Absence absence = new Absence(fichajeResponse.getDate(), fichajeResponse.getTime(), subjectFound, usuario);
+                System.out.println("Absence: " + absence.toString());
                 absenceRepository.save(absence);
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return valueToSend;
+
+        return String.valueOf(valueToSend);
     }
 
     private Subject getSubject(List<Session> sessions, SimpleDateFormat formatter, User user, Date dateFichaje) {

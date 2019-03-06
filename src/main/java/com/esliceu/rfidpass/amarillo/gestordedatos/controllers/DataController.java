@@ -6,12 +6,16 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.StudentSess
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.DataContainer;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -53,9 +57,9 @@ public class DataController {
 
     // Servicio lila para crear / actualizar la base de datos.
     @RequestMapping(value = "/updateData", method = RequestMethod.PUT)
-    public boolean updateData(@RequestBody DataContainer data) {
+    public boolean updateData(@RequestBody DataContainer data) throws IOException {
 
-        courseRepository.saveAll(data.getCourses());
+        /*courseRepository.saveAll(data.getCourses());
         System.out.println("Cursos añadidos");
 
         groupRepository.saveAll(data.getGroups());
@@ -77,18 +81,20 @@ public class DataController {
         System.out.println("Sessiones de los profesores añadidos");
 
         studentSessionRepository.saveAll(data.getStudentSessions());
-        System.out.println("Sessiones de los estudiantes añadidos");
+        System.out.println("Sessiones de los estudiantes añadidos");*/
+        ObjectMapper mapper = new ObjectMapper();
+        int size = (int) (data.getNumberOfStudentSessions() / 50000);
 
-        for (int i = 50000, j = 0; i < data.getNumberOfStudentSessions(); i += 50000, j += 50000) {
+        for (int i = 1; i <= size; i++) {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(data.getPage())
-                    .queryParam("start", j)
-                    .queryParam("end", i);
+                    .queryParam("start", i)
+                    .queryParam("end", 50000);
 
-            List<StudentSession> studentSessions = restTemplate.getForObject(builder.toUriString(),List.class);
-            System.out.println(studentSessions);
-            //studentSessionRepository.saveAll(studentSessions);
+            String studentSessions = restTemplate.getForObject(builder.toUriString(), String.class);
+            List<StudentSession> myObjects = mapper.readValue(studentSessions, new TypeReference<List<StudentSession>>(){});
+            studentSessionRepository.saveAll(myObjects);
         }
-
+        System.out.println(true);
         return true;
     }
 

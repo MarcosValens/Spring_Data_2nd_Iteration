@@ -25,7 +25,6 @@ public class Absence {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-
     public Absence() {}
 
     public Absence(String date, String hour, Subject subject, User user) {

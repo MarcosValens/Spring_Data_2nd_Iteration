@@ -16,7 +16,8 @@ public class Lector {
 
     @Id
     @Column(name = "Id", nullable = false)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
     @OneToMany(mappedBy = "lector")
     private Set<Signing> signings;
@@ -25,15 +26,16 @@ public class Lector {
     @JoinColumn(name = "group_code", nullable = false)
     private Group group;
 
+    private String idMachine;
     public Lector() {
 
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -51,5 +53,13 @@ public class Lector {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public void setIdMachine(String idMachine) {
+        this.idMachine = idMachine;
+    }
+
+    public String getIdMachine() {
+        return idMachine;
     }
 }
