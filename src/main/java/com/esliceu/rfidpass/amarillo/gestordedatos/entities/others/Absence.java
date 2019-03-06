@@ -17,11 +17,14 @@ public class Absence {
     private String date;
     private String hour;
 
+    private boolean isValidated = false;
+
     @ManyToOne
     private Subject subject;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
 
     public Absence() {}
 
@@ -66,6 +69,14 @@ public class Absence {
 
     public Subject getSubject() {
         return subject;
+    }
+
+    public boolean isValidated() {
+        return isValidated;
+    }
+
+    public void setValidated(boolean validated) {
+        isValidated = validated;
     }
 
     @Override
