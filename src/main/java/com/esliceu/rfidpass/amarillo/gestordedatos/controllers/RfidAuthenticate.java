@@ -86,11 +86,11 @@ public class RfidAuthenticate {
                 if (session instanceof StudentSession) {
                     StudentSession studentSession = (StudentSession) session;
                     subjectDate = formatter.parse(studentSession.getStartHour());
-                    subject = dateFichaje.compareTo(subjectDate) >= 0 ? studentSession.getSubject() : subject;
+                    subject = dateFichaje.compareTo(subjectDate) < 0 ? studentSession.getSubject() : subject;
                 } else if (session instanceof ProfessorSession) {
                     ProfessorSession professorSession = (ProfessorSession) session;
                     subjectDate = formatter.parse(professorSession.getStartHour());
-                    subject = dateFichaje.compareTo(subjectDate) >= 0 ? professorSession.getSubject() : subject;
+                    subject = dateFichaje.compareTo(subjectDate) < 0 ? professorSession.getSubject() : subject;
                 }
             }
         } catch(Exception e) {
