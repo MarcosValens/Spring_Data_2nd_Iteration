@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class RfidAuthenticate {
@@ -63,13 +64,13 @@ public class RfidAuthenticate {
 
         User user = userRepository.findByRfid(fichajeResponse.getRFID());
         String weekDay = fichajeResponse.getWeekDay().toString();
-        List<Session> sessions = sessionRepository.findByDay(weekDay);
+        List<Session> daySessions = sessionRepository.findByDay(weekDay);
         Subject subjectFound;
 
         try {
             Date dateFichaje = format.parse(fichajeResponse.getTime());
-            subjectFound = getSubject(sessions, format, dateFichaje);
-            if (!onTime(fichajeResponse, subjectFound, user, format)){
+            subjectFound = getSubject(daySessions, format, user, dateFichaje);
+            if (!onTime(fichajeResponse, subjectFound, format)){
                 Absence absence = new Absence(fichajeResponse.getDate(), fichajeResponse.getTime(), subjectFound, user);
                 absenceRepository.save(absence);
             }
@@ -79,12 +80,15 @@ public class RfidAuthenticate {
         return valueToSend;
     }
 
-    private Subject getSubject(List<Session> sessions, SimpleDateFormat formatter, Date dateFichaje) {
+    private Subject getSubject(List<Session> sessions, SimpleDateFormat formatter, User user, Date dateFichaje) {
+        sessionRepository.findByUser(user);
+        List<Session> userSessions;
+        userSessions = sessions.stream().filter(sessions::contains).collect(Collectors.toList());
         Subject subject = null;
         Date subjectDateStart;
         Date subjectDateEnd;
         try {
-            for (Session session : sessions) {
+            for (Session session : userSessions) {
                 subjectDateStart = formatter.parse(session.getStartHour());
                 subjectDateEnd = formatter.parse(session.getEndHour());
                 subject = dateFichaje.compareTo(subjectDateStart) >= 0 && dateFichaje.compareTo(subjectDateEnd) <= 0
@@ -98,7 +102,7 @@ public class RfidAuthenticate {
         return subject;
     }
 
-    private boolean onTime(FichajeResponse fichajeResponse, Subject subject, User user, SimpleDateFormat format) throws ParseException {
+    private boolean onTime(FichajeResponse fichajeResponse, Subject subject, SimpleDateFormat format) throws ParseException {
         Integer offset = 10;
         String sessionStartDate = sessionRepository.findBySubject(subject).getStartHour();
         String[] dateSplit = sessionStartDate.split(":");
