@@ -95,6 +95,7 @@ public class DataController {
 
     }
 
+    // Endpoint si fos necessari per obtenir el grup d'un alumne:
     @RequestMapping(value = "/getStudentGroup", method = RequestMethod.POST)
     public String getStudentGroup(@RequestParam("name") String name,
                                   @RequestParam("surname") String surname){
