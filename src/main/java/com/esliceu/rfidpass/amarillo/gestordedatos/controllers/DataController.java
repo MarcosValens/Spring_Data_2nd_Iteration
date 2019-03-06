@@ -2,15 +2,17 @@ package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.Absence;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.SchoolRoom;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.StudentSession;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.DataContainer;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class DataController {
@@ -24,6 +26,7 @@ public class DataController {
     private final StudentSessionRepository studentSessionRepository;
     private final ProfessorSessionRepository professorSessionRepository;
     private final AbsenceRepository absenceRepository;
+    private final RestTemplate restTemplate;
 
     @Autowired
     public DataController(CourseRepository courseRepository,
@@ -34,7 +37,7 @@ public class DataController {
                           SubjectRepository subjectRepository,
                           StudentSessionRepository studentSessionRepository,
                           ProfessorSessionRepository professorSessionRepository,
-                          AbsenceRepository absenceRepository) {
+                          AbsenceRepository absenceRepository, RestTemplate restTemplate) {
 
         this.courseRepository = courseRepository;
         this.groupRepository = groupRepository;
@@ -45,6 +48,7 @@ public class DataController {
         this.studentSessionRepository = studentSessionRepository;
         this.professorSessionRepository = professorSessionRepository;
         this.absenceRepository = absenceRepository;
+        this.restTemplate = restTemplate;
     }
 
     // Servicio lila para crear / actualizar la base de datos.
@@ -75,8 +79,14 @@ public class DataController {
         studentSessionRepository.saveAll(data.getStudentSessions());
         System.out.println("Sessiones de los estudiantes añadidos");
 
-        for (int i = 0; i < data.getNumberOfStudentSessions(); i += 50000) {
+        for (int i = 50000, j = 0; i < data.getNumberOfStudentSessions(); i += 50000, j += 50000) {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(data.getPage())
+                    .queryParam("start", j)
+                    .queryParam("end", i);
 
+            List<StudentSession> studentSessions = restTemplate.getForObject(builder.toUriString(),List.class);
+            System.out.println(studentSessions);
+            //studentSessionRepository.saveAll(studentSessions);
         }
 
         return true;
