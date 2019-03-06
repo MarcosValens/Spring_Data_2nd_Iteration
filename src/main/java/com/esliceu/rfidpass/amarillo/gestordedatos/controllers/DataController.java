@@ -85,7 +85,6 @@ public class DataController {
 
     @RequestMapping(value = "/getRooms", method = RequestMethod.GET)
     public Iterable<SchoolRoom> getRooms() {
-
         return schoolRoomRepository.findAll();
     }
 
