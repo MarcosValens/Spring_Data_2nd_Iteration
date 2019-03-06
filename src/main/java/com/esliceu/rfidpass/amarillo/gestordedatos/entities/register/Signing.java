@@ -10,6 +10,7 @@ public class Signing {
 
     @Id
     @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(nullable = false)

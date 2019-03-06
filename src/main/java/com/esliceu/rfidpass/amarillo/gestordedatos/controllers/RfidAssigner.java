@@ -29,9 +29,6 @@ public class RfidAssigner {
                 usuario.setRfid(rfid);
                 this.userRepository.save(usuario);
             }
-
         });
-
-
     }
 }
