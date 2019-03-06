@@ -25,6 +25,13 @@ public class Absence {
 
     public Absence() {}
 
+    public Absence(String date, String hour, Subject subject, User user) {
+        this.date = date;
+        this.hour = hour;
+        this.subject = subject;
+        this.user = user;
+    }
+
     public void setDate(String date) {
         this.date = date;
     }

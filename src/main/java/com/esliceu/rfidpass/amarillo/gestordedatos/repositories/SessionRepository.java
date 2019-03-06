@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface SessionRepository extends CrudRepository<Session, Long> {
 
-    User findBySubject(Subject subject);
+    Session findBySubject(Subject subject);
     List<Session> findByDay(String day);
 
 }
