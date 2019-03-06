@@ -1,5 +1,6 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.SchoolRoom;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.DataContainer;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.*;
@@ -89,6 +90,12 @@ public class DataController {
     public List<Professor> getTeachers() {
 
         return new ArrayList<>();
+    }
+
+    @RequestMapping(value = "/getRooms", method = RequestMethod.GET)
+    public Iterable<SchoolRoom> getRooms() {
+
+        return schoolRoomRepository.findAll();
     }
 
 }
