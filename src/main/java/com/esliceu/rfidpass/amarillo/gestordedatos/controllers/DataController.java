@@ -1,16 +1,16 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.Absence;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.SchoolRoom;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.DataContainer;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class DataController {
@@ -23,6 +23,7 @@ public class DataController {
     private final SubjectRepository subjectRepository;
     private final StudentSessionRepository studentSessionRepository;
     private final ProfessorSessionRepository professorSessionRepository;
+    private final AbsenceRepository absenceRepository;
 
     @Autowired
     public DataController(CourseRepository courseRepository,
@@ -32,7 +33,8 @@ public class DataController {
                           SchoolRoomRepository schoolRoomRepository,
                           SubjectRepository subjectRepository,
                           StudentSessionRepository studentSessionRepository,
-                          ProfessorSessionRepository professorSessionRepository) {
+                          ProfessorSessionRepository professorSessionRepository,
+                          AbsenceRepository absenceRepository) {
 
         this.courseRepository = courseRepository;
         this.groupRepository = groupRepository;
@@ -42,6 +44,7 @@ public class DataController {
         this.subjectRepository = subjectRepository;
         this.studentSessionRepository = studentSessionRepository;
         this.professorSessionRepository = professorSessionRepository;
+        this.absenceRepository = absenceRepository;
     }
 
     // Servicio lila para crear / actualizar la base de datos.
@@ -84,6 +87,21 @@ public class DataController {
     public List<Professor> getTeachers() {
 
         return new ArrayList<>();
+    }
+
+
+    @RequestMapping(value = "/getRooms", method = RequestMethod.GET)
+    public Iterable<SchoolRoom> getRooms() {
+        return schoolRoomRepository.findAll();
+    }
+
+    @RequestMapping(value = "/validateAbsence", method = RequestMethod.POST)
+    public void validateAbsence(@RequestParam(value = "absences", defaultValue = "null") List<String> absences) {
+        for (String absence1 : absences) {
+            Absence absence = absenceRepository.findAbsenceById(Integer.valueOf(absence1));
+            absence.setValidated(true);
+        }
+
     }
 
 }
