@@ -1,13 +1,12 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Group;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Student;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.DataContainer;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,5 +89,33 @@ public class DataController {
 
         return new ArrayList<>();
     }
+
+
+    // Endpoint per obtenir tots els alumnes:
+    @RequestMapping(value = "/getAllStudents")
+    public List<Student> getAllStudents() {
+
+        return (List<Student>) studentRepository.findAll();
+
+    }
+
+    @RequestMapping(value = "/getStudentGroup", method = RequestMethod.POST)
+    public String getStudentGroup(@RequestParam("name") String name,
+                                  @RequestParam("surname") String surname){
+
+        List<Student> students = (List<Student>) studentRepository.findAll();
+        String group = new String();
+
+
+        for(Student student : students){
+            if (student.getName().equals(name) && student.getFirstSurname().equals(surname1)){
+                group = student.getGroup().toString();
+            }
+        }
+
+        return group;
+
+    }
+
 
 }
