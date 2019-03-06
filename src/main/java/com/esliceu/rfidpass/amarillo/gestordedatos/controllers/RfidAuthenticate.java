@@ -33,17 +33,23 @@ public class RfidAuthenticate {
     private final SubjectRepository asignaturaRepository;
     private final SessionRepository sessionRepository;
     private final AbsenceRepository absenceRepository;
+    private final StudentSessionRepository studentSessionRepository;
+    private final ProfessorSessionRepository professorSessionRepository;
     @Autowired
     public RfidAuthenticate(UserRepository userRepository,
                             SigningRepository signingRepository,
                             SubjectRepository asignaturaRepository,
                             SessionRepository sessionRepository,
+                            StudentSessionRepository studentSessionRepository,
+                            ProfessorSessionRepository professorSessionRepository,
                             AbsenceRepository absenceRepository
     ) {
         this.userRepository = userRepository;
         this.signingRepository = signingRepository;
         this.asignaturaRepository = asignaturaRepository;
         this.sessionRepository = sessionRepository;
+        this.studentSessionRepository = studentSessionRepository;
+        this.professorSessionRepository = professorSessionRepository;
         this.absenceRepository = absenceRepository;
     }
 
@@ -80,7 +86,8 @@ public class RfidAuthenticate {
     }
 
     private Subject getSubject(List<Session> sessions, SimpleDateFormat formatter, User user, Date dateFichaje) {
-        List<Session> userSessions = sessionRepository.findByUser(user);
+        List<Session> userSessions = user instanceof Student ? studentSessionRepository.findByStudent((Student) user) :
+                professorSessionRepository.findByProfessor((Professor) user);
         userSessions = userSessions.stream().filter(sessions::contains).collect(Collectors.toList());
         Date subjectDateStart;
         Date subjectDateEnd;
