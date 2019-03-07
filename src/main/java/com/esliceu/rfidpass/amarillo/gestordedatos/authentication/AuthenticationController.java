@@ -17,22 +17,25 @@ Authentication with username and password
 @RestController
 public class AuthenticationController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    @Autowired
+    public AuthenticationController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public User login(@RequestBody User user, HttpServletResponse response) {
 
         User userInDB = userRepository.findByUsername(user.getUsername());
 
-        if(userInDB != null){
+        if (userInDB != null) {
 
             //Check username
-            if( userInDB.getUsername().equals(user.getUsername()) ){
+            if (userInDB.getUsername().equals(user.getUsername())) {
 
                 //If username matches check password
-                if( userInDB.getPassword().equals(user.getPassword())){
+                if (userInDB.getPassword().equals(user.getPassword())) {
 
                     //Return de logged user without password
                     userInDB.setPassword("");

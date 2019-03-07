@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 
 @RestController
-public class FichajeConsulter {
+public class SigningController {
 
     private SigningRepository signingRepository;
     private ProfessorRepository ProfessorRepository;
 
     @Autowired
-    public FichajeConsulter(SigningRepository signingRepository, ProfessorRepository ProfessorRepository){
+    public SigningController(SigningRepository signingRepository, ProfessorRepository ProfessorRepository){
         this.signingRepository = signingRepository;
         this.ProfessorRepository = ProfessorRepository;
     }
 
-    @RequestMapping("/getfichajes")
-    public Map<String, List<Signing>> getFichajes(@RequestParam(value = "TeacherId", defaultValue = "null") String TeacherId){
+    @RequestMapping("/getSignings")
+    public Map<String, List<Signing>> getSignings(@RequestParam(value = "TeacherId", defaultValue = "null") String TeacherId){
 
         Optional<Professor> teacher = ProfessorRepository.findById(Integer.valueOf(TeacherId));
 

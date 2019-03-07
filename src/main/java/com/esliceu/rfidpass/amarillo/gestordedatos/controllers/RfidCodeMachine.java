@@ -26,13 +26,13 @@ public class RfidCodeMachine {
     }
 
     @RequestMapping("/assignCodeMachine")
-    public void assigncodemachine(@RequestParam(value = "lectorId", defaultValue = "null") String lectorId,
+    public void assignCodeMachine(@RequestParam(value = "lectorId", defaultValue = "null") String lectorId,
                                   @RequestParam(value = "groupId", defaultValue = "null") String groupId,
                                   @RequestParam(value = "teacherId", defaultValue = "null") String teacherId){
 
-        Optional<Professor> profesor = professorRepository.findById(Integer.valueOf(teacherId));
+        Optional<Professor> professor = professorRepository.findById(Integer.valueOf(teacherId));
 
-        if (profesor.isPresent() && profesor.get().getGroup() != null ){
+        if (professor.isPresent() && professor.get().getGroup() != null ){
             Optional<Lector> optLector = lectorRepository.findById(Integer.parseInt(lectorId));
             Optional<Group> optGroup = groupRepository.findById(Integer.parseInt(groupId));
 
@@ -43,6 +43,5 @@ public class RfidCodeMachine {
                 groupRepository.save(group);
             }));
         }
-
     }
 }

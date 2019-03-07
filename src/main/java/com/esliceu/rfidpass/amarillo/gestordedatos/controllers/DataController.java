@@ -1,7 +1,6 @@
 package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
 
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Group;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.Absence;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.SchoolRoom;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.StudentSession;
@@ -18,7 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -33,6 +31,7 @@ public class DataController {
     private final StudentSessionRepository studentSessionRepository;
     private final ProfessorSessionRepository professorSessionRepository;
     private final AbsenceRepository absenceRepository;
+    private final ObjectMapper mapper;
     private final RestTemplate restTemplate;
 
     @Autowired
@@ -44,7 +43,7 @@ public class DataController {
                           SubjectRepository subjectRepository,
                           StudentSessionRepository studentSessionRepository,
                           ProfessorSessionRepository professorSessionRepository,
-                          AbsenceRepository absenceRepository, RestTemplate restTemplate) {
+                          AbsenceRepository absenceRepository, ObjectMapper mapper, RestTemplate restTemplate) {
 
         this.courseRepository = courseRepository;
         this.groupRepository = groupRepository;
@@ -55,6 +54,7 @@ public class DataController {
         this.studentSessionRepository = studentSessionRepository;
         this.professorSessionRepository = professorSessionRepository;
         this.absenceRepository = absenceRepository;
+        this.mapper = mapper;
         this.restTemplate = restTemplate;
     }
 
@@ -62,7 +62,7 @@ public class DataController {
     @RequestMapping(value = "/updateData", method = RequestMethod.PUT)
     public boolean updateData(@RequestBody DataContainer data) throws IOException {
 
-        /*courseRepository.saveAll(data.getCourses());
+        courseRepository.saveAll(data.getCourses());
         System.out.println("Cursos añadidos");
 
         groupRepository.saveAll(data.getGroups());
@@ -84,20 +84,20 @@ public class DataController {
         System.out.println("Sessiones de los profesores añadidos");
 
         studentSessionRepository.saveAll(data.getStudentSessions());
-        System.out.println("Sessiones de los estudiantes añadidos");*/
-        ObjectMapper mapper = new ObjectMapper();
-        int size = (int) (data.getNumberOfStudentSessions() / 50000);
+        System.out.println("Sessiones de los estudiantes añadidos");
 
-        for (int i = 1; i <= size; i++) {
+        int numberOfPages = (int) (data.getNumberOfStudentSessions() / 50000);
+
+        for (int i = 1; i <= numberOfPages; i++) {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(data.getPage())
                     .queryParam("start", i)
                     .queryParam("end", 50000);
 
-            String studentSessions = restTemplate.getForObject(builder.toUriString(), String.class);
-            List<StudentSession> myObjects = mapper.readValue(studentSessions, new TypeReference<List<StudentSession>>(){});
-            studentSessionRepository.saveAll(myObjects);
+            String studentSessionsJSON = restTemplate.getForObject(builder.toUriString(), String.class);
+            List<StudentSession> studentSessions = mapper.readValue(studentSessionsJSON, new TypeReference<List<StudentSession>>(){});
+            studentSessionRepository.saveAll(studentSessions);
         }
-        System.out.println(true);
+
         return true;
     }
 
@@ -105,15 +105,15 @@ public class DataController {
     @RequestMapping(value = "/getTeachers", method = RequestMethod.GET)
     public List<Professor> getTeachers() {
 
+
+
         return new ArrayList<>();
     }
 
     // Endpoint per obtenir tots els alumnes:
     @RequestMapping(value = "/getAllStudents")
     public List<Student> getAllStudents() {
-
         return (List<Student>) studentRepository.findAll();
-
     }
 
     // Endpoint si fos necessari per obtenir el grup d'un alumne:
@@ -122,8 +122,7 @@ public class DataController {
                                   @RequestParam("surname") String surname){
 
         List<Student> students = (List<Student>) studentRepository.findAll();
-        String group = new String();
-
+        String group = "";
 
         for(Student student : students){
             if (student.getName().equals(name) && student.getFirstSurname().equals(surname)){
@@ -132,7 +131,6 @@ public class DataController {
         }
 
         return group;
-
     }
 
     @RequestMapping(value = "/getRooms", method = RequestMethod.GET)
@@ -146,8 +144,5 @@ public class DataController {
             Absence absence = absenceRepository.findAbsenceById(Integer.valueOf(absence1));
             absence.setValidated(true);
         }
-
     }
-
-
 }

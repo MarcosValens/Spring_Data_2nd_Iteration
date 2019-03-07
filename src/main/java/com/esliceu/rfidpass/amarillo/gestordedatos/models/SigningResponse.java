@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class FichajeResponse {
+public class SigningResponse {
 
     @JsonProperty("rfid")
     private String RFID;
@@ -17,7 +17,7 @@ public class FichajeResponse {
     private String idMachine;
 
     @Autowired
-    public FichajeResponse() {
+    public SigningResponse() {
     }
 
     public String getRFID() {
