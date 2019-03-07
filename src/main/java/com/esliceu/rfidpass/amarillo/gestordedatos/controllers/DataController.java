@@ -87,7 +87,7 @@ public class DataController {
         System.out.println("Sessiones de los estudiantes añadidos");
 
         int numberOfPages = (int) (data.getNumberOfStudentSessions() / 50000);
-
+        System.out.println(numberOfPages);
         for (int i = 1; i <= numberOfPages; i++) {
             UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(data.getPage())
                     .queryParam("start", i)
@@ -97,16 +97,13 @@ public class DataController {
             List<StudentSession> studentSessions = mapper.readValue(studentSessionsJSON, new TypeReference<List<StudentSession>>(){});
             studentSessionRepository.saveAll(studentSessions);
         }
-
+        System.out.println("Done");
         return true;
     }
 
     // Servicio azul para que ellos obtengan las faltas pendientes.
     @RequestMapping(value = "/getTeachers", method = RequestMethod.GET)
     public List<Professor> getTeachers() {
-
-
-
         return new ArrayList<>();
     }
 

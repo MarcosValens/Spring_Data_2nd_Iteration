@@ -111,4 +111,20 @@ public class User {
     public void setAbsences(Set<Absence> absences) {
         this.absences = absences;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", firstSurname='" + firstSurname + '\'' +
+                ", secondSurname='" + secondSurname + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", rfid='" + rfid + '\'' +
+                ", signing=" + signing +
+                ", absences=" + absences +
+                '}';
+    }
 }

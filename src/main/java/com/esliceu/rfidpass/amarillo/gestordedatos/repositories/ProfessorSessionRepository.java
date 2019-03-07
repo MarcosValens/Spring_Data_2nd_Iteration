@@ -7,7 +7,8 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProfessorSessionRepository extends CrudRepository<ProfessorSession, Integer> {
-    List<Session> findByProfessor(Professor professor);
+    Set<Session> findByProfessor(Professor professor);
 }

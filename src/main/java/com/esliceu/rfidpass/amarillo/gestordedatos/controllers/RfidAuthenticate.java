@@ -110,9 +110,9 @@ public class RfidAuthenticate {
     }
 
     private Session getSubject(List<Session> sessions, SimpleDateFormat formatter, User user, Date dateFichaje) {
-        List<Session> userSessions = user instanceof Student ? studentSessionRepository.findByStudent((Student) user) :
+        Set<Session> userSessions = user instanceof Student ? studentSessionRepository.findByStudent((Student) user) :
                 professorSessionRepository.findByProfessor((Professor) user);
-        userSessions = userSessions.stream().filter(sessions::contains).collect(Collectors.toList());
+        userSessions = sessions.stream().filter(userSessions::contains).collect(Collectors.toCollection(LinkedHashSet::new));
 
         Date subjectDateStart;
         Date subjectDateEnd;

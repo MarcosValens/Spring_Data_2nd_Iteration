@@ -2,8 +2,7 @@ package com.esliceu.rfidpass.amarillo.gestordedatos.entities.users;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Group;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.ProfessorSession;
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.StudentSession;
-import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.User;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.Session;
 
 import javax.persistence.*;
 import java.util.Set;
