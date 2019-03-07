@@ -9,6 +9,9 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.StudentSess
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Student;
 import com.esliceu.rfidpass.amarillo.gestordedatos.models.DataContainer;
+import com.esliceu.rfidpass.amarillo.gestordedatos.models.notificationModels.AbsenceNotify;
+import com.esliceu.rfidpass.amarillo.gestordedatos.models.notificationModels.StudentNotify;
+import com.esliceu.rfidpass.amarillo.gestordedatos.models.notificationModels.Teacher;
 import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -96,7 +99,8 @@ public class DataController {
                     .queryParam("end", 50000);
 
             String studentSessionsJSON = restTemplate.getForObject(builder.toUriString(), String.class);
-            List<StudentSession> studentSessions = mapper.readValue(studentSessionsJSON, new TypeReference<List<StudentSession>>(){});
+            List<StudentSession> studentSessions = mapper.readValue(studentSessionsJSON, new TypeReference<List<StudentSession>>() {
+            });
             studentSessionRepository.saveAll(studentSessions);
         }
 
@@ -105,7 +109,8 @@ public class DataController {
 
     // Servicio azul para que ellos obtengan las faltas pendientes.
     @RequestMapping(value = "/getTeachers", method = RequestMethod.GET)
-    public List<Professor> getTeachers() {
+    public List<Teacher> getTeachers() {
+        List<Teacher> allTeachersWithAbsences = new ArrayList<>();
 
         Iterable<Professor> professors = professorRepository.findAll();
 
@@ -113,17 +118,38 @@ public class DataController {
             Iterable<ProfessorSession> sessions = professorSessionRepository.getAllGroups(professor.getCode());
 
             sessions.forEach(professorSession -> {
-               Iterable<Student> students = professorSession.getGroup().getStudents();
+                Iterable<Student> students = professorSession.getGroup().getStudents();
+                List<StudentNotify> allStudents = new ArrayList<>();
 
-               students.forEach(student -> {
+                students.forEach(student -> {
                     List<Absence> absences = absenceRepository.findAllByUser_CodeAndValidatedIsFalse(student.getCode());
+                    List<AbsenceNotify> absenceNotifies = new ArrayList<>();
 
-               });
+                    absences.forEach(absence -> {
+                        absenceNotifies.add(new AbsenceNotify(
+                                absence.getDate(),
+                                absence.getHour(),
+                                absence.getSubject().getDescription()));
+                    });
+
+                    if (!absenceNotifies.isEmpty()) {
+                        allStudents.add(new StudentNotify(
+                                student.getName(),
+                                student.getFirstSurname() + " " + student.getSecondSurname(),
+                                absenceNotifies));
+                    }
+                });
+
+                if (!allStudents.isEmpty()) {
+                    allTeachersWithAbsences.add(new Teacher(
+                            professor.getName(),
+                            professor.getFirstSurname() + " " + professor.getSecondSurname(),
+                            allStudents));
+                }
             });
         });
 
-
-        return new ArrayList<>();
+        return allTeachersWithAbsences;
     }
 
     // Endpoint per obtenir tots els alumnes:
@@ -135,13 +161,13 @@ public class DataController {
     // Endpoint si fos necessari per obtenir el grup d'un alumne:
     @RequestMapping(value = "/getStudentGroup", method = RequestMethod.POST)
     public String getStudentGroup(@RequestParam("name") String name,
-                                  @RequestParam("surname") String surname){
+                                  @RequestParam("surname") String surname) {
 
         List<Student> students = (List<Student>) studentRepository.findAll();
         String group = "";
 
-        for(Student student : students){
-            if (student.getName().equals(name) && student.getFirstSurname().equals(surname)){
+        for (Student student : students) {
+            if (student.getName().equals(name) && student.getFirstSurname().equals(surname)) {
                 group = student.getGroup().toString();
             }
         }

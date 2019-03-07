@@ -2,6 +2,7 @@ package com.esliceu.rfidpass.amarillo.gestordedatos.entities.others;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.courses.Subject;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
