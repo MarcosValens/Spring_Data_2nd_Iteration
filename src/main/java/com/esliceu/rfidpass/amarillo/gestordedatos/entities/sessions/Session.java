@@ -21,17 +21,8 @@ public class Session {
     private Integer durada;
     private String endHour;
 
-    @Column(name = "student_id", insertable = false,updatable = false)
-    private Long student_id;
-
-    public Long getStudent_id() {
-        return student_id;
-    }
-
-    public void setStudent_id(Long student_id) {
-        this.student_id = student_id;
-    }
-
+    @Column(name = "code", insertable = false,updatable = false)
+    private String code;
 
     public Long getId() {
         return id;

@@ -9,6 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Set;
 
-public interface ProfessorSessionRepository extends CrudRepository<ProfessorSession, Integer> {
-    Set<Session> findByProfessor(Professor professor);
+public interface ProfessorSessionRepository extends CrudRepository<ProfessorSession, Long> {
+    Set<ProfessorSession> findByProfessorId(Professor professor);
 }

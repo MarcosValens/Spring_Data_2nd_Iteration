@@ -28,16 +28,6 @@ public class Professor extends User {
         this.group = group;
     }
 
-    @Override
-    public String getCode() {
-        return super.getCode();
-    }
-
-    @Override
-    public void setCode(String code) {
-        super.setCode(code);
-    }
-
     public Set<ProfessorSession> getProfessorSessions() {
         return professorSessions;
     }

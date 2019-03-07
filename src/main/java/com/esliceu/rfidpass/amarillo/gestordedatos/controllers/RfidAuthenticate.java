@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -110,9 +109,8 @@ public class RfidAuthenticate {
     }
 
     private Session getSubject(List<Session> sessions, SimpleDateFormat formatter, User user, Date dateFichaje) {
-        Set<Session> userSessions = user instanceof Student ? studentSessionRepository.findByStudent((Student) user) :
-                professorSessionRepository.findByProfessor((Professor) user);
-        userSessions = sessions.stream().filter(userSessions::contains).collect(Collectors.toCollection(LinkedHashSet::new));
+        Set<Session> userSessions = sessionRepository.findByCode(user.getCode());
+        userSessions = sessions.stream().filter(userSessions::contains).collect(Collectors.toCollection(HashSet::new));
 
         Date subjectDateStart;
         Date subjectDateEnd;
