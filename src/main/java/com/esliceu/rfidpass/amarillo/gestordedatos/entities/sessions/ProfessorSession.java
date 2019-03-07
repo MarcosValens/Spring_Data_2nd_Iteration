@@ -26,6 +26,10 @@ public class ProfessorSession extends Session { //Clases de un profesor
     public ProfessorSession() {
     }
 
+    public Professor getProfessor() {
+        return professor;
+    }
+
     public Group getGroup() {
         return group;
     }

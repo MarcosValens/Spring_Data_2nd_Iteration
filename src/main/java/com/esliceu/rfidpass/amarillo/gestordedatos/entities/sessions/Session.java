@@ -21,6 +21,9 @@ public class Session {
     private Integer durada;
     private String endHour;
 
+    @Column(name = "code", insertable = false,updatable = false)
+    private String code;
+
     public Long getId() {
         return id;
     }
