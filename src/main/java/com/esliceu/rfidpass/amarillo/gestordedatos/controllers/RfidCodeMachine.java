@@ -30,7 +30,7 @@ public class RfidCodeMachine {
                                   @RequestParam(value = "groupId", defaultValue = "null") String groupId,
                                   @RequestParam(value = "teacherId", defaultValue = "null") String teacherId){
 
-        Optional<Professor> professor = professorRepository.findById(Integer.valueOf(teacherId));
+        Optional<Professor> professor = professorRepository.findById(teacherId);
 
         if (professor.isPresent() && professor.get().getGroup() != null ){
             Optional<Lector> optLector = lectorRepository.findById(Integer.parseInt(lectorId));

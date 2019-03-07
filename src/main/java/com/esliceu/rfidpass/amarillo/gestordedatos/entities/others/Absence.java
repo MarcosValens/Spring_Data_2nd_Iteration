@@ -18,7 +18,7 @@ public class Absence {
     private String date;
     private String hour;
 
-    private boolean isValidated = false;
+    private boolean validated = false;
 
     @ManyToOne
     private Subject subject;
@@ -72,11 +72,11 @@ public class Absence {
     }
 
     public boolean isValidated() {
-        return isValidated;
+        return validated;
     }
 
     public void setValidated(boolean validated) {
-        isValidated = validated;
+        validated = validated;
     }
 
     @Override

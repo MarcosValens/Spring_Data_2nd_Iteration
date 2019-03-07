@@ -21,7 +21,7 @@ public class Session {
     private Integer durada;
     private String endHour;
 
-    @Column(name = "code", insertable = false,updatable = false)
+    @Column(name = "code")
     private String code;
 
     public Long getId() {
@@ -70,5 +70,13 @@ public class Session {
 
     public void setEndHour(String endHour) {
         this.endHour = endHour;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

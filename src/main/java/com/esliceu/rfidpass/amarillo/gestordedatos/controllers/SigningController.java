@@ -28,7 +28,7 @@ public class SigningController {
     @RequestMapping("/getSignings")
     public Map<String, List<Signing>> getSignings(@RequestParam(value = "TeacherId", defaultValue = "null") String TeacherId){
 
-        Optional<Professor> teacher = ProfessorRepository.findById(Integer.valueOf(TeacherId));
+        Optional<Professor> teacher = ProfessorRepository.findById(TeacherId);
 
         Group grupoProfesor = teacher.get().getGroup();
         Set<Student> usuariosGrupo= grupoProfesor.getStudents();
