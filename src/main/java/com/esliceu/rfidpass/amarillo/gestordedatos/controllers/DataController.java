@@ -11,6 +11,7 @@ import com.esliceu.rfidpass.amarillo.gestordedatos.repositories.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class DataController {
@@ -144,5 +146,21 @@ public class DataController {
             Absence absence = absenceRepository.findAbsenceById(Integer.valueOf(absence1));
             absence.setValidated(true);
         }
+    }
+
+    @RequestMapping(value = "/getStudentHorari", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<StudentSession> getStudentHorari(@RequestBody Map<String, String> myJsonRequest) {
+
+        List<Student> student = studentRepository.findByCode(myJsonRequest.get("studentId"));
+        List<StudentSession> studentSessions = new ArrayList<>();
+
+        if (!student.isEmpty()){
+            for (Student aStudent : student) {
+                studentSessions.add(studentSessionRepository.findByStudentId(aStudent.getId()));
+            }
+
+            return studentSessions;
+        }
+        return null;
     }
 }

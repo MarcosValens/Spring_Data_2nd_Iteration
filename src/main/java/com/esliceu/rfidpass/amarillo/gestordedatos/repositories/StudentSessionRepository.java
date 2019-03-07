@@ -10,4 +10,8 @@ import java.util.List;
 
 public interface StudentSessionRepository extends CrudRepository<StudentSession, Integer> {
     List<Session> findByStudent(Student student);
+
+    StudentSession findById(Long studentId);
+
+    StudentSession findByStudentId(Long studentId);
 }
