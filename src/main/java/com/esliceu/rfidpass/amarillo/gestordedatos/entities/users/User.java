@@ -13,11 +13,8 @@ import java.util.Set;
 @Table(name = "User")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @Id private String code = "";
 
-    private String code;
     private String name;
     private String firstSurname;
     private String secondSurname;
@@ -94,14 +91,6 @@ public class User {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Set<Absence> getAbsences() {

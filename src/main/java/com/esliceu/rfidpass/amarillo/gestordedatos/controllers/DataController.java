@@ -3,6 +3,8 @@ package com.esliceu.rfidpass.amarillo.gestordedatos.controllers;
 
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.Absence;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.others.SchoolRoom;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.ProfessorSession;
+import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.Session;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.sessions.StudentSession;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Professor;
 import com.esliceu.rfidpass.amarillo.gestordedatos.entities.users.Student;
@@ -105,6 +107,20 @@ public class DataController {
     @RequestMapping(value = "/getTeachers", method = RequestMethod.GET)
     public List<Professor> getTeachers() {
 
+        Iterable<Professor> professors = professorRepository.findAll();
+
+        professors.forEach(professor -> {
+            Iterable<ProfessorSession> sessions = professorSessionRepository.getAllGroups(professor.getCode());
+
+            sessions.forEach(professorSession -> {
+               Iterable<Student> students = professorSession.getGroup().getStudents();
+
+               students.forEach(student -> {
+                    List<Absence> absences = absenceRepository.findAllByUser_CodeAndValidatedIsFalse(student.getCode());
+
+               });
+            });
+        });
 
 
         return new ArrayList<>();
